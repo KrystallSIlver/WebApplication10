@@ -1,0 +1,37 @@
+﻿<h1>Employee Data</h1>
+
+<p>This component demonstrates fetching Customer data from the server.</p>
+
+<p *ngIf="!cstmrList"><em>Loading...</em></p>
+
+<p>
+    <a [routerLink]="['/register-customer']">Create New</a>
+</p>
+
+<table class='table' *ngIf="cstmrList">
+    <thead>
+        <tr>
+            <th>CustomerId</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Comments</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let cstmr of cstmrList">
+            <td>{{ cstmr.CustomerId }}</td>
+            <td>{{ cstmr.name }}</td>
+            <td>{{ cstmr.address }}</td>
+            <td>{{ cstmr.email }}</td>
+            <td>{{ cstmr.phone }}</td>
+            <td>{{ cstmr.comments }}</td>
+            <td>
+            <td>
+                <a [routerLink]="['/customer/edit/', cstmr.Id]">Edit</a> |
+                <a [routerLink]="" (click)="delete(cstmr.Id)">Delete</a>
+            </td>
+        </tr>
+    </tbody>
+</table>  
