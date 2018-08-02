@@ -4,6 +4,7 @@ import { NgForm, FormBuilder, FormGroup, Validators, FormControl } from '@angula
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { FetchCustomerComponent } from '../fetchcustomer/fetchcustomer.component';
 import { CustomerService } from '../../services/csmrservice.service';
+import { Customer } from '../Models/Customer';
 
 @Component({
     templateUrl: './customerdetails.component.html'
@@ -25,12 +26,4 @@ export class customerdetails implements OnInit {
             .switchMap(customerId => this._customerService.getCustomerById(this.customerId))
             .subscribe(user => this.cust = user);
     }
-}
-export class Customer {
-    customerId: number;
-    name: string;
-    address: string;
-    email: string;
-    phone: string;
-    comments: string;
 }
