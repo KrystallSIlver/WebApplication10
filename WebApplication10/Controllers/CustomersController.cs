@@ -12,8 +12,7 @@ namespace WebApplication10.Controllers
     public class CustomersController : Controller
     {
         CustomerDataAccessLayer customerData = new CustomerDataAccessLayer();
-        [HttpGet]
-        [Route("api/Customers/Index")]
+        [HttpGet("api/Customers/Index")]
         public IEnumerable<Customer> Index()
         {
             return customerData.GetAllCustomers();
@@ -25,25 +24,22 @@ namespace WebApplication10.Controllers
             return Ok(customerData.AddCustomer(customer));
         }
 
-        [HttpGet]
-        [Route("api/Customers/Details/{id}")]
+        [HttpGet("api/Customers/Details/{id}")]
         public Customer Details(int id)
         {
             return customerData.GetCustomerData(id);
         }
 
-        [HttpPut]
-        [Route("api/Customers/Edit")]
-        public int Edit([FromBody]Customer customer)
+        [HttpPut("api/Customers/Edit")]
+        public IActionResult Edit([FromBody]Customer customer)
         {
-            return customerData.UpdateCustomer(customer);
+            return Ok(customerData.UpdateCustomer(customer));
         }
 
-        [HttpDelete]
-        [Route("api/Customers/Delete/{id}")]
-        public int Delete(int id)
+        [HttpDelete("api/Customers/Delete/{id}")]
+        public IActionResult Delete(int id)
         {
-            return customerData.DeleteCustomer(id);
+            return Ok(customerData.DeleteCustomer(id));
         }
 
     }

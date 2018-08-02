@@ -13,7 +13,7 @@
     <div class="form-group row">
         <label class="control-label col-md-12" for="Address">Address</label>
         <div class="col-md-4">
-            <input class="form-control" type="text" value="address" formControlName="address" />
+            <input class="form-control" type="text" formControlName="address" />
         </div>
         <span class="text-danger" *ngIf="address.invalid && formDir.submitted">
             Address is required
@@ -22,7 +22,7 @@
     <div class="form-group row">
         <label class="control-label col-md-12" for="Email">Email</label>
         <div class="col-md-4">
-            <input type="email" formControlName="email">
+            <input class="form-control" type="text" formControlName="email">
         </div>
         <span class="text-danger" *ngIf="email.invalid && formDir.submitted">
             Email is required
@@ -46,5 +46,6 @@
     <div class="form-group">
         <button type="submit" class="btn btn-default" value="submit">Save</button>
         <button class="btn" (click)="cancel()">Cancel</button>
+        <button class="btn" (click)="addcontact()">AddContact</button>
     </div>
 </form>

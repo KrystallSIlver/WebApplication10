@@ -5,6 +5,7 @@ import { Router, Resolve } from '@angular/router';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
+import { retry } from 'rxjs/operator/retry';
 
 @Injectable()
 export class CustomerService {
@@ -44,7 +45,6 @@ export class CustomerService {
             .map((response: Response) => response.json())
             .catch(this.errorHandler);
     }
-
     errorHandler(error: Response) {
         console.log(error);
         return Observable.throw(error);

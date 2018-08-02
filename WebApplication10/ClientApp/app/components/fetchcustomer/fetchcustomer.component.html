@@ -21,7 +21,7 @@
     </thead>
     <tbody>
         <tr *ngFor="let cstmr of cstmrList">
-            <td>{{ cstmr.CustomerId }}</td>
+            <td>{{ cstmr.customerId }}</td>
             <td>{{ cstmr.name }}</td>
             <td>{{ cstmr.address }}</td>
             <td>{{ cstmr.email }}</td>
@@ -29,8 +29,9 @@
             <td>{{ cstmr.comments }}</td>
             <td>
             <td>
-                <a [routerLink]="['/customer/edit/', cstmr.Id]">Edit</a> |
-                <a [routerLink]="" (click)="delete(cstmr.Id)">Delete</a>
+                <a [routerLink]="['/customers/edit/', cstmr.customerId]">Edit</a> |
+                <a [routerLink]="['/customer-details/',cstmr.customerId]">Details</a> |
+                <a [routerLink]="" (click)="delete(cstmr.customerId)">Delete</a>
             </td>
         </tr>
     </tbody>

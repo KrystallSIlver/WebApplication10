@@ -21,18 +21,19 @@ export class FetchCustomerComponent {
         )
     }
 
-    delete(Id) {
-        var ans = confirm("Do you want to delete customer with Id: " + Id);
+    delete(customerId) {
+        var ans = confirm("Do you want to delete customer with Id: " + customerId);
         if (ans) {
-            this._customerService.deleteCustomer(Id).subscribe((data) => {
+            this._customerService.deleteCustomer(customerId).subscribe((data) => {
                 this.getAllCustomers();
             }, error => console.error(error))
         }
     }
+
 }
 
 interface CutomerData {
-    CustomerId: number;
+    customerId: number;
     name: string;
     address: string;
     email: string;

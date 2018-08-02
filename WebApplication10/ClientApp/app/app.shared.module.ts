@@ -5,11 +5,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router'; 
 
+
 import { AppComponent } from './components/app/app.component';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { HomeComponent } from './components/home/home.component';
-import { FetchCustomerComponent } from './components/fetchcustomer/fetchcustomer.component'
-import { createcustomer } from './components/addcustomer/addcustomer.component'  
+import { FetchCustomerComponent } from './components/fetchcustomer/fetchcustomer.component';
+import { createcustomer } from './components/addcustomer/addcustomer.component';
+import { customerdetails } from './components/customerdetails/customerdetails.component';
 import { BrowserModule } from '@angular/platform-browser';
 
 
@@ -20,7 +22,8 @@ import { BrowserModule } from '@angular/platform-browser';
         NavMenuComponent,
         HomeComponent,
         FetchCustomerComponent,
-        createcustomer, 
+        createcustomer,
+        customerdetails,
     ],
     imports: [
         CommonModule,
@@ -33,7 +36,8 @@ import { BrowserModule } from '@angular/platform-browser';
             { path: 'home', component: HomeComponent },
             { path: 'fetch-customer', component: FetchCustomerComponent },
             { path: 'register-customer', component: createcustomer },
-            { path: 'customers/edit/:id', component: createcustomer },  
+            { path: 'customers/edit/:id', component: createcustomer },
+            { path: 'customer-details/:id', component: customerdetails },
             { path: '**', redirectTo: 'home' }
         ])
     ],

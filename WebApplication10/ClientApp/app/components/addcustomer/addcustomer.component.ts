@@ -7,37 +7,42 @@ import { CustomerService } from '../../services/csmrservice.service';
 
 @Component({
     templateUrl: './AddCustomer.component.html'
+
 })
 
 export class createcustomer implements OnInit {
     customerForm: FormGroup;
     title: string = "Create";
-    CustomerId: number;
+    customerId: number;
     errorMessage: any;
 
     constructor(private _fb: FormBuilder, private _avRoute: ActivatedRoute,
         private _customerService: CustomerService, private _router: Router) {
        if (this._avRoute.snapshot.params["id"]) {
-            this.CustomerId = this._avRoute.snapshot.params["id"];
+            this.customerId = this._avRoute.snapshot.params["id"];
         }
 
         this.customerForm = this._fb.group({
-            name: new FormControl('', [Validators.required]),
+            customerId: 0,
+            name: new FormControl('a', [Validators.required]),
             address: new FormControl('', [Validators.required]),
             email: new FormControl('', [Validators.required]),
             phone: new FormControl('', [Validators.required]),
             comments: new FormControl('')
         });
-
+        
     }
-
+    
     ngOnInit() {
-
-        if (this.CustomerId > 0) {
+        this.customerForm.valueChanges.subscribe(value => {
+            console.log(value);
+        });
+        if (this.customerId > 0) {
             this.title = "Edit";
-            this._customerService.getCustomerById(this.CustomerId)
+            this._customerService.getCustomerById(this.customerId)
                 .subscribe(resp => this.customerForm.setValue(resp)
-                    , error => this.errorMessage = error);
+                , error => this.errorMessage = error);
+            console.log(this.customerId);
         }
 
     }
@@ -65,10 +70,10 @@ export class createcustomer implements OnInit {
     cancel() {
         this._router.navigate(['/fetch-customer']);
     }
-    get customerId() { return this.customerForm.get('CustomerId') }
     get name() { return this.customerForm.get('name'); }
     get address() { return this.customerForm.get('address'); }
     get email() { return this.customerForm.get('email'); }
     get phone() { return this.customerForm.get('phone'); }
     get comments() { return this.customerForm.get('comments'); }
 }  
+
