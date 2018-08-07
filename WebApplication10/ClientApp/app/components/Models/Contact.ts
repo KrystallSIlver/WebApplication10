@@ -1,9 +1,12 @@
-﻿export class Contact {
+﻿import { Customer } from "./customer";
+
+export class Contact {
     constructor(
         public ContactId?: number,
         public Name?: string,
         public Role?: string,
-        public Mail?: string,
         public Phone?: string,
-        public CustomerId?: number) { }
+        public Mail?: string,
+        public Customerid?: number,
+        public customer?: Customer) { }
 }

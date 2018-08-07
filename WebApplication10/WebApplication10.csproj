@@ -29,7 +29,8 @@
     <None Remove="ClientApp\app\components\fetchcustomer\fetchcustomer.component.ts" />
     <None Remove="ClientApp\app\components\Models\Contact.ts" />
     <None Remove="ClientApp\app\components\Models\Customer.ts" />
-    <None Remove="ClientApp\app\components\tabs\tabs.component.ts" />
+    <None Remove="ClientApp\app\components\Models\Department.ts" />
+    <None Remove="ClientApp\app\components\Models\User.ts" />
     <None Remove="ClientApp\app\Services\csmrservice.service.ts" />
   </ItemGroup>
 
@@ -39,7 +40,8 @@
     <TypeScriptCompile Include="ClientApp\app\components\fetchcustomer\fetchcustomer.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\Models\Contact.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\Models\Customer.ts" />
-    <TypeScriptCompile Include="ClientApp\app\components\tabs\tabs.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\Models\Department.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\Models\User.ts" />
     <TypeScriptCompile Include="ClientApp\app\Services\csmrservice.service.ts" />
   </ItemGroup>
 

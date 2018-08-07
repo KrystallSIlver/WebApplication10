@@ -9,21 +9,23 @@ import { Customer } from '../Models/Customer';
 
 @Component({
     templateUrl: './AddCustomer.component.html'
-    
+
 })
 
 export class createcustomer implements OnInit {
     customerForm: FormGroup;
-    contactForm: FormGroup;
+    //  contactForm: FormGroup;
     title: string = "Create";
     customerId: number = 0;
     errorMessage: any;
     condition: boolean = false;
     customer: Customer = new Customer();
-    
+ //   contact: Contact = new Contact();
+  //  contacts: Contact[];
+
     constructor(private _fb: FormBuilder, private _avRoute: ActivatedRoute,
         private _customerService: CustomerService, private _router: Router) {
-       if (this._avRoute.snapshot.params["id"]) {
+        if (this._avRoute.snapshot.params["id"]) {
             this.customerId = this._avRoute.snapshot.params["id"];
         }
 
@@ -35,17 +37,18 @@ export class createcustomer implements OnInit {
             phone: new FormControl('', [Validators.required]),
             comments: new FormControl('')
         });
-        this.contactForm = this._fb.group({
-            name: new FormControl(''),
-            role: new FormControl(''),
-            phone: new FormControl(''),
-            mail: new FormControl(''),
-            contactId: this.customerId
-        });
+
+        //    this.contactForm = this._fb.group({
+        //         cname: new FormControl('', [Validators.required]),
+        //         crole: new FormControl('', [Validators.required]),
+        //         cphone: new FormControl('', [Validators.required]),
+        //         cmail: new FormControl('', [Validators.required]),
+        //          contactId: this.customerId
+        //      });
     }
-    
+
     ngOnInit() {
-        
+
         this.customer = this.customerForm.value;
         this.customerForm.valueChanges.subscribe(value => {
             console.log(value);
@@ -54,12 +57,12 @@ export class createcustomer implements OnInit {
             this.title = "Edit";
             this._customerService.getCustomerById(this.customerId)
                 .subscribe(resp => this.customerForm.setValue(resp)
-                , error => this.errorMessage = error);
+                    , error => this.errorMessage = error);
             console.log(this.customerId);
         }
 
     }
-    
+
     save() {
 
         if (!this.customerForm.valid) {
@@ -84,9 +87,22 @@ export class createcustomer implements OnInit {
 
         }
     }
+    addContact() {
 
+        this.condition = true;
+    }
+    //   saveContact() {
+    //      this.contacts.push(this.contactForm.value);
+    //        this.condition = false;
+//}
     cancel() {
-        this._router.navigate(['/fetch-customer']);
+        if (!this.condition) {
+
+            this._router.navigate(['/fetch-customer']);
+        }
+        else {
+            this.condition = false;
+        }
     }
 }  
 

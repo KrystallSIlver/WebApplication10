@@ -1,4 +1,6 @@
-﻿import { Contact } from './Contact';
+﻿import { Contact } from "./contact";
+import { Department } from "./department"
+import { User } from "./user";
 
 export class Customer {
     constructor(
@@ -6,8 +8,9 @@ export class Customer {
         public Name?: string,
         public Address?: string,
         public Email?: string,
+        public Phone?: string,
         public Comments?: string,
-
-        public Contact?: Contact[]
-    ) { }
+        public Contact?: Contact[],
+        public Cepartment?: Department[],
+        public User?: User[]) { }
 }

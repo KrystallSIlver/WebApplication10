@@ -1,5 +1,6 @@
 ﻿<h1>{{title}}</h1>
-<form [formGroup]="customerForm" (ngSubmit)="save()" *ngIf="!condition;else Contact" novalidate>
+<ng-container *ngIf="!condition">
+<form [formGroup]="customerForm" (ngSubmit)="save()" novalidate>
     <div class="form-group row">
         <label class="control-label col-md-12">Name</label>
         <div class="col-md-4">
@@ -49,13 +50,15 @@
 
 </form>
 
+</ng-container>
 
-<ng-template #Contact >
-    <form [formGroup]="contactForm" (ngSubmit)="save()">
+
+<ng-container *ngIf="condition">
+    <form [formGroup]="contactForm" (ngSubmit)="saveContact()">
         <div class="form-group row">
             <label class="control-label col-md-12">Name</label>
             <div class="col-md-4">
-                <input class="form-control" type="text" value="name" formControlName="name" />
+                <input class="form-control" type="text" value="name" formControlName="cname" />
             </div>
             <span class="text-danger" *ngIf="name.invalid && formDir.submitted">
                 Name is required.
@@ -64,7 +67,7 @@
         <div class="form-group row">
             <label class="control-label col-md-12" for="Role">Role</label>
             <div class="col-md-4">
-                <input class="form-control" type="text" formControlName="role" />
+                <input class="form-control" type="text" formControlName="crole" />
             </div>
             <span class="text-danger" *ngIf="address.invalid && formDir.submitted">
                 Address is required
@@ -73,7 +76,7 @@
         <div class="form-group row">
             <label class="control-label col-md-12" for="Email">Phone</label>
             <div class="col-md-4">
-                <input class="form-control" type="text" formControlName="phone">
+                <input class="form-control" type="text" formControlName="cphone">
             </div>
             <span class="text-danger" *ngIf="email.invalid && formDir.submitted">
                 Email is required
@@ -82,7 +85,7 @@
         <div class="form-group row">
             <label class="control-label col-md-12" for="Mail">Mail</label>
             <div class="col-md-4">
-                <input class="form-control" type="text" formControlName="mail">
+                <input class="form-control" type="text" formControlName="cmail">
             </div>
             <span class="text-danger" *ngIf="mail.invalid && formDir.submitted">
                 Phone is required
@@ -91,5 +94,4 @@
         <button type="submit" class="btn btn-default" value="submit">Save</button>
         <button class="btn" (click)="cancel()">Cancel</button>
     </form>
-
-</ng-template>
+</ng-container>
