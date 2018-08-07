@@ -36,10 +36,10 @@ export class createcustomer implements OnInit {
             comments: new FormControl('')
         });
         this.contactForm = this._fb.group({
-            name: new FormControl(''),
-            role: new FormControl(''),
-            phone: new FormControl(''),
-            mail: new FormControl(''),
+            cname: new FormControl(''),
+            crole: new FormControl(''),
+            cphone: new FormControl(''),
+            cmail: new FormControl(''),
             contactId: this.customerId
         });
     }
@@ -88,5 +88,10 @@ export class createcustomer implements OnInit {
     cancel() {
         this._router.navigate(['/fetch-customer']);
     }
+    get name() { return this.customerForm.get('name'); }
+    get address() { return this.customerForm.get('address'); }
+    get email() { return this.customerForm.get('email'); }
+    get phone() { return this.customerForm.get('phone'); }
+    get comments() { return this.customerForm.get('comments'); }
 }  
 
