@@ -14,7 +14,11 @@ namespace WebApplication10.Models
         {
             try
             {
-                return db.Customer.ToList();
+                return db.Customer
+                    .Include(c=>c.Contact)
+                    .Include(c=>c.Department)
+                    .Include(c=>c.User)                    
+                    .ToList();
             }
             catch
             {
@@ -26,6 +30,19 @@ namespace WebApplication10.Models
         {
             try
             {
+                customer.CustomerId = db.Customer.Max(x => x.CustomerId)+1;
+                foreach (var c in customer.Contact)
+                {
+                    c.CustomerId = customer.CustomerId;
+                    try
+                    {
+                        c.ContactId = db.Contact.Max(x => x.ContactId) + 1;
+                    }
+                    catch
+                    {
+                        c.ContactId = 0;
+                    }
+                }
                 db.Customer.Add(customer);
                 db.SaveChanges();
                 return 1;
@@ -55,7 +72,7 @@ namespace WebApplication10.Models
         {
             try
             {
-                Customer customer = db.Customer.Find(id);
+                Customer customer = db.Customer.Include(c => c.Contact).FirstOrDefault(c => c.CustomerId == id);
                 return customer;
             }
             catch

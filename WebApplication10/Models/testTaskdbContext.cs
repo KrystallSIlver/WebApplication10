@@ -22,9 +22,12 @@ namespace WebApplication10.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=testTaskdb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+                //optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=testTaskdb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+                optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=testTaskdb1;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+                optionsBuilder.EnableSensitiveDataLogging();
             }
         }
 
@@ -38,22 +41,18 @@ namespace WebApplication10.Models
 
                 entity.Property(e => e.Mail)
                     .IsRequired()
-                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Name)
                     .IsRequired()
-                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Phone)
                     .IsRequired()
-                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Role)
                     .IsRequired()
-                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.Customer)
@@ -69,26 +68,21 @@ namespace WebApplication10.Models
 
                 entity.Property(e => e.Address)
                     .IsRequired()
-                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Comments)
-                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Email)
                     .IsRequired()
-                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Name)
                     .IsRequired()
-                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Phone)
                     .IsRequired()
-                    .HasMaxLength(20)
                     .IsUnicode(false);
             });
 
@@ -98,17 +92,14 @@ namespace WebApplication10.Models
 
                 entity.Property(e => e.Address)
                     .IsRequired()
-                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Manager)
                     .IsRequired()
-                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Name)
                     .IsRequired()
-                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.Customer)
@@ -130,32 +121,26 @@ namespace WebApplication10.Models
 
                 entity.Property(e => e.Department)
                     .IsRequired()
-                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Mail)
                     .IsRequired()
-                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Mobile)
                     .IsRequired()
-                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Name)
                     .IsRequired()
-                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Password)
                     .IsRequired()
-                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.Property(e => e.UserName)
                     .IsRequired()
-                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.Customer)

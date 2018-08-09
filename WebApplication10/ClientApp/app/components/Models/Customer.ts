@@ -3,6 +3,8 @@ import { Department } from "./department"
 import { User } from "./user";
 
 export class Customer {
+
+   
     constructor(
         public CustomerId?: number,
         public Name?: string,
@@ -10,7 +12,7 @@ export class Customer {
         public Email?: string,
         public Phone?: string,
         public Comments?: string,
-        public Contact?: Contact[],
-        public Cepartment?: Department[],
-        public User?: User[]) { }
+        public Contact: Contact[] = [],
+        public Department: Department[] = [],
+        public User: User[] = [] ) { }
 }

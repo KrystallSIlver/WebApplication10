@@ -1,10 +1,30 @@
 ﻿<table class='table'>
-    <thead>
         <tr>CustomerId : {{cust.customerId}}</tr>
         <tr>Name : {{cust.name}}</tr>
         <tr>Address : {{cust.address}}</tr>
         <tr>Email : {{cust.email}}</tr>
         <tr>Phone : {{cust.phone}}</tr>
         <tr>Comments : {{cust.comments}}</tr>
-    </thead>
-</table>  
+    </table>
+    <h2>Contacts</h2>
+    <table class="table">   
+    <thead>
+            <tr>
+             <th>Contact Id</th>
+            <th>Contact Name</th>
+            <th>Contact Role</th>
+            <th>Contact Mail</th>
+            <th>Contact Phone</th>
+            </tr>
+        </thead>
+    <tbody>
+        <tr *ngFor="let c of cust.contact">
+            
+            <td>{{ c.contactId }}</td>
+            <td>{{ c.name }}</td>
+            <td>{{ c.role }}</td>
+            <td>{{ c.mail }}</td>
+            <td>{{ c.phone }}</td>
+        </tr>
+        </tbody>
+        </table>
