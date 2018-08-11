@@ -7,9 +7,9 @@ namespace WebApplication10.Models
     {
         public Customer()
         {
-            Contact = new HashSet<Contact>();
-            Department = new HashSet<Department>();
-            User = new HashSet<User>();
+            Contacts = new HashSet<Contact>();
+            Departments = new HashSet<Department>();
+            Users = new HashSet<User>();
         }
 
         public int CustomerId { get; set; }
@@ -19,8 +19,8 @@ namespace WebApplication10.Models
         public string Phone { get; set; }
         public string Comments { get; set; }
 
-        public ICollection<Contact> Contact { get; set; }
-        public ICollection<Department> Department { get; set; }
-        public ICollection<User> User { get; set; }
+        public ICollection<Contact> Contacts { get; set; }
+        public ICollection<Department> Departments { get; set; }
+        public ICollection<User> Users { get; set; }
     }
 }

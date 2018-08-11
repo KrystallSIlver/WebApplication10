@@ -8,7 +8,7 @@
         <div class="col-md-4">
             <input class="form-control" type="text" value="name" formControlName="name" />
         </div>
-        <span class="text-danger" *ngIf="name.invalid && formDir.submitted">
+        <span class="text-danger" *ngIf="name.invalid">
             Name is required.
         </span>
     </div>
@@ -17,7 +17,7 @@
         <div class="col-md-4">
             <input class="form-control" name="address" type="text" formControlName="address" />
         </div>
-        <span class="text-danger" *ngIf="address.invalid && formDir.submitted">
+        <span class="text-danger" *ngIf="address.invalid">
             Address is required
         </span>
     </div>
@@ -26,7 +26,7 @@
         <div class="col-md-4">
             <input class="form-control" type="text" formControlName="email">
         </div>
-        <span class="text-danger" *ngIf="email.invalid && formDir.submitted">
+        <span class="text-danger" *ngIf="email.invalid">
             Email is required
         </span>
     </div>
@@ -35,7 +35,7 @@
         <div class="col-md-4">
             <input class="form-control" type="text" id="phone" formControlName="phone">
         </div>
-        <span class="text-danger" *ngIf="phone.invalid && formDir.submitted">
+        <span class="text-danger" *ngIf="phone.invalid">
             Phone is required
         </span>
     </div>
@@ -63,7 +63,7 @@
             <div class="col-md-4">
                 <input class="form-control" name="cname" type="text" formControlName="name" />
             </div>
-            <span class="text-danger" *ngIf="cname.invalid && formDir.submitted">
+            <span class="text-danger" *ngIf="cname.invalid && contactForm.submitted">
                 Name is required.
             </span>
         </div>
@@ -72,7 +72,7 @@
             <div class="col-md-4">
                 <input class="form-control" name="crole" type="text" formControlName="role" />
             </div>
-            <span class="text-danger" *ngIf="crole.invalid && formDir.submitted">
+            <span class="text-danger" *ngIf="crole.invalid">
                 Role is required
             </span>
         </div>
@@ -81,7 +81,7 @@
             <div class="col-md-4">
                 <input class="form-control" type="text" name="cphone" formControlName="phone" />
             </div>
-            <span class="text-danger" *ngIf="cphone.invalid && formDir.submitted">
+            <span class="text-danger" *ngIf="cphone.invalid && contactForm.submitted">
                 Phone is required
             </span>
         </div>
@@ -90,11 +90,33 @@
             <div class="col-md-4">
                 <input class="form-control" name="cmail" type="text" formControlName="mail" />
             </div>
-            <span class="text-danger" *ngIf="cmail.invalid && formDir.submitted">
+            <span class="text-danger" *ngIf="cmail.invalid && contactForm.submitted">
                 Email  is required
             </span>
         </div>
         <button type="submit" class="btn btn-default" value="submit">Save</button>
         <button class="btn" (click)="cancel()">Cancel</button>
     </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ContactId</th>
+                <th>Contact Name</th>
+                <th>Contact Role</th>
+                <th>Contact Phone</th>
+                <th>Contact Mail</th>
+            </tr>
+            
+        </thead>
+        <tbody>
+            <tr *ngFor="let c of contacts">
+                <td>{{c.contactId}}</td>
+                <td>{{c.name}}</td>
+                <td>{{c.role}}</td>
+                <td>{{c.phone}}</td>
+                <td>{{c.mail}}</td>
+                </tr>
+            </tbody>
+    </table>
 </ng-container>

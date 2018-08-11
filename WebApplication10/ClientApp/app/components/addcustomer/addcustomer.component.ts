@@ -6,6 +6,7 @@ import { FetchCustomerComponent } from '../fetchcustomer/fetchcustomer.component
 import { CustomerService } from '../../services/csmrservice.service';
 import { Contact } from '../Models/Contact';
 import { Customer } from '../Models/Customer';
+import { Observable } from 'rxjs';
 
 @Component({
     templateUrl: './AddCustomer.component.html'
@@ -30,38 +31,52 @@ export class createcustomer implements OnInit {
         }
         this.customerForm = this._fb.group({
             customerId: 0,
-            name: new FormControl('', [Validators.required]),
-            address: new FormControl('', [Validators.required]),
-            email: new FormControl('', [Validators.required]),
-            phone: new FormControl('', [Validators.required]),
+            name: new FormControl('', [Validators.required, Validators.minLength(1)]),
+            address: new FormControl('', [Validators.required, Validators.minLength(1)]),
+            email: new FormControl('', [Validators.required, Validators.minLength(1)]),
+            phone: new FormControl('', [Validators.required, Validators.minLength(1)]),
             comments: new FormControl('')
         });
 
             this.contactForm = this._fb.group({
-                 name: new FormControl('', [Validators.required]),
-                 role: new FormControl('', [Validators.required]),
-                 phone: new FormControl('', [Validators.required]),
-                 mail: new FormControl('', [Validators.required]),
+                name: new FormControl('', [Validators.required, Validators.minLength(1)]),
+                role: new FormControl('', [Validators.required, Validators.minLength(1)]),
+                phone: new FormControl('', [Validators.required, Validators.minLength(1)]),
+                mail: new FormControl('', [Validators.required, Validators.minLength(1)]),
               });
     }
+    TestF() {
+        this.customerForm.patchValue(this.customer);
+        console.log(this.customer);
+        this.contacts = this.customer.contacts;
+        console.log(this.customer.contacts);
+    }
+
+    
 
     ngOnInit() {
         
-        this.customerForm.valueChanges.subscribe(value => {
-            this.customer = this.customerForm.value;
-            console.log(this.customer);
-        });
-        this.contactForm.valueChanges.subscribe(v => { console.log(v); });
+        this.customerForm.valueChanges.subscribe(value =>console.log(value));
+        this.contactForm.valueChanges.subscribe(v => {console.log(v);});
 
         if (this.customerId > 0) {
             this.title = "Edit";
-            
+
             this._customerService.getCustomerById(this.customerId)
-                .subscribe(resp => this.customerForm.setValue(resp)
-                , error => this.errorMessage = error);
-            this.customer = this.customerForm.value;
-            console.log(this.customerId);
+                .subscribe((resp: Customer) => {
+                    this.customer = resp;
+                    this.contacts = this.customer.contacts;
+                    this.TestF();
+                }
+                , error => this.errorMessage = error).add((c) => {
+                    console.log(this.customer.contacts);
+
+                });
+
+            //console.log(this.customer);
+            
         }
+        
 
     }
 
@@ -71,14 +86,18 @@ export class createcustomer implements OnInit {
         }
 
         if (this.title == "Create") {
-            this.customer.Contact = this.contacts;
-            console.log(this.customer);
+            this.customer = this.customerForm.value;
+            this.customer.contacts = this.contacts;
             this._customerService.saveCustomer(this.customer)
                 .subscribe((data) => {
                     this._router.navigate(['/fetch-customer']);
                 }, error => this.errorMessage = error)
         }
+
         else if (this.title == "Edit") {
+            this.customer = this.customerForm.value;
+            this.customer.contacts = this.contacts;
+            console.log(this.customer)
             this._customerService.updateCustomer(this.customer)
                 .subscribe((data) => {
                     this._router.navigate(['/fetch-customer']);
@@ -90,18 +109,21 @@ export class createcustomer implements OnInit {
         }
     }
     addContact() {
-
         this.condition = true;
     }
     saveContact() {
         this.contact = this.contactForm.value;
-        this.contact.ContactId = 0;
-        this.contact.Customerid = 0;
-        console.log(this.contact)
-        this.contacts.push(this.contact);
         console.log(this.contacts);
+        if (this.title == "Create") {
+            this.contact.contactId = 0;
+            this.contact.customerid = 0;
+            this.contacts.push(this.contact);
+        }
+        else {
+            this.contacts.push(this.contact);
+            console.log(this.customer.contacts);
+        }
         this.contactForm.reset();
-        console.log(this.customer);
         this.condition = false;
 
     }

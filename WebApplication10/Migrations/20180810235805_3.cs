@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebApplication10.Migrations
 {
-    public partial class asdd : Migration
+    public partial class _3 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -10,7 +11,8 @@ namespace WebApplication10.Migrations
                 name: "Customer",
                 columns: table => new
                 {
-                    CustomerId = table.Column<int>(nullable: false),
+                    CustomerId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(unicode: false, nullable: false),
                     Address = table.Column<string>(unicode: false, nullable: false),
                     Email = table.Column<string>(unicode: false, nullable: false),
@@ -26,7 +28,8 @@ namespace WebApplication10.Migrations
                 name: "Contact",
                 columns: table => new
                 {
-                    ContactId = table.Column<int>(nullable: false),
+                    ContactId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(unicode: false, nullable: false),
                     Role = table.Column<string>(unicode: false, nullable: false),
                     Phone = table.Column<string>(unicode: false, nullable: false),
@@ -48,7 +51,8 @@ namespace WebApplication10.Migrations
                 name: "Department",
                 columns: table => new
                 {
-                    DepartmentId = table.Column<int>(nullable: false),
+                    DepartmentId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(unicode: false, nullable: false),
                     Manager = table.Column<string>(unicode: false, nullable: false),
                     Address = table.Column<string>(unicode: false, nullable: false),
@@ -70,7 +74,8 @@ namespace WebApplication10.Migrations
                 name: "User",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(nullable: false),
+                    UserId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(unicode: false, nullable: false),
                     Mobile = table.Column<string>(unicode: false, nullable: false),
                     Mail = table.Column<string>(unicode: false, nullable: false),

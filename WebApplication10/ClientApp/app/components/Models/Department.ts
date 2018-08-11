@@ -3,12 +3,12 @@ import { User } from './User';
 
 export class Department {
     constructor(
-        public DepartmentId?: number,
-        public Name?: string,
-        public Address?: string,
-        public CustomerId?: number,
-        public ManagerId?: number,
-        public Customer?: Customer,
-        public User?: User) { }
+        public departmentId?: number,
+        public name?: string,
+        public address?: string,
+        public customerId?: number,
+        public managerId?: number,
+        public customer?: Customer,
+        public user?: User) { }
 
 }

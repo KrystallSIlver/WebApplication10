@@ -9,8 +9,8 @@ using WebApplication10.Models;
 namespace WebApplication10.Migrations
 {
     [DbContext(typeof(testTaskdbContext))]
-    [Migration("20180807190903_asdd")]
-    partial class asdd
+    [Migration("20180810235805_3")]
+    partial class _3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -22,7 +22,9 @@ namespace WebApplication10.Migrations
 
             modelBuilder.Entity("WebApplication10.Models.Contact", b =>
                 {
-                    b.Property<int>("ContactId");
+                    b.Property<int>("ContactId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CustomerId")
                         .HasColumnName("CustomerID");
@@ -52,7 +54,9 @@ namespace WebApplication10.Migrations
 
             modelBuilder.Entity("WebApplication10.Models.Customer", b =>
                 {
-                    b.Property<int>("CustomerId");
+                    b.Property<int>("CustomerId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -80,7 +84,9 @@ namespace WebApplication10.Migrations
 
             modelBuilder.Entity("WebApplication10.Models.Department", b =>
                 {
-                    b.Property<int>("DepartmentId");
+                    b.Property<int>("DepartmentId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -109,7 +115,9 @@ namespace WebApplication10.Migrations
 
             modelBuilder.Entity("WebApplication10.Models.User", b =>
                 {
-                    b.Property<int>("UserId");
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CustomerId");
 
@@ -151,7 +159,7 @@ namespace WebApplication10.Migrations
             modelBuilder.Entity("WebApplication10.Models.Contact", b =>
                 {
                     b.HasOne("WebApplication10.Models.Customer", "Customer")
-                        .WithMany("Contact")
+                        .WithMany("Contacts")
                         .HasForeignKey("CustomerId")
                         .HasConstraintName("FK__Contact__Custome__276EDEB3");
                 });
@@ -159,7 +167,7 @@ namespace WebApplication10.Migrations
             modelBuilder.Entity("WebApplication10.Models.Department", b =>
                 {
                     b.HasOne("WebApplication10.Models.Customer", "Customer")
-                        .WithMany("Department")
+                        .WithMany("Departments")
                         .HasForeignKey("CustomerId")
                         .HasConstraintName("FK__Departmen__Custo__32E0915F");
 
@@ -172,12 +180,12 @@ namespace WebApplication10.Migrations
             modelBuilder.Entity("WebApplication10.Models.User", b =>
                 {
                     b.HasOne("WebApplication10.Models.Customer", "Customer")
-                        .WithMany("User")
+                        .WithMany("Users")
                         .HasForeignKey("CustomerId")
                         .HasConstraintName("FK__User__CustomerId__2D27B809");
 
                     b.HasOne("WebApplication10.Models.Department", "Department1")
-                        .WithMany("User")
+                        .WithMany("Users")
                         .HasForeignKey("DepartmentId")
                         .HasConstraintName("FK__User__Department__31EC6D26");
                 });

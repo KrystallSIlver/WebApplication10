@@ -15,9 +15,9 @@ namespace WebApplication10.Models
             try
             {
                 return db.Customer
-                    .Include(c=>c.Contact)
-                    .Include(c=>c.Department)
-                    .Include(c=>c.User)                    
+                    .Include(c=>c.Contacts)
+                    .Include(c=>c.Departments)
+                    .Include(c=>c.Users)                    
                     .ToList();
             }
             catch
@@ -30,19 +30,22 @@ namespace WebApplication10.Models
         {
             try
             {
-                customer.CustomerId = db.Customer.Max(x => x.CustomerId)+1;
-                foreach (var c in customer.Contact)
+              /*  int i = 1;
+               // customer.CustomerId = db.Customer.Max(x => x.CustomerId)+1;
+                foreach (var c in customer.Contacts)
                 {
+                   
                     c.CustomerId = customer.CustomerId;
                     try
                     {
-                        c.ContactId = db.Contact.Max(x => x.ContactId) + 1;
+                        c.ContactId = db.Contact.Max(x => x.ContactId) + i;
+                        i++;
                     }
                     catch
                     {
                         c.ContactId = 0;
                     }
-                }
+                }*/
                 db.Customer.Add(customer);
                 db.SaveChanges();
                 return 1;
@@ -55,7 +58,22 @@ namespace WebApplication10.Models
         //To Update the records of a particluar employee  
         public int UpdateCustomer(Customer customer)
         {
+            foreach (Contact c in customer.Contacts)
+            {                
+                    c.CustomerId = customer.CustomerId; 
+            }
             try
+            {
+                db.Entry(customer).State = EntityState.Modified;
+                db.SaveChanges();
+                return 1;
+            }
+            catch
+            {
+                throw;
+            }
+
+           /* try
             {
                 db.Entry(customer).State = EntityState.Modified;
                 db.SaveChanges();
@@ -65,14 +83,14 @@ namespace WebApplication10.Models
             catch
             {
                 throw;
-            }
+            }*/
         }
         //Get the details of a particular employee  
         public Customer GetCustomerData(int id)
         {
             try
             {
-                Customer customer = db.Customer.Include(c => c.Contact).FirstOrDefault(c => c.CustomerId == id);
+                Customer customer = db.Customer.Include(c => c.Contacts).FirstOrDefault(c => c.CustomerId == id);
                 return customer;
             }
             catch
@@ -96,6 +114,17 @@ namespace WebApplication10.Models
             }
         }
         #endregion
+        public int AddContact(Customer customer) {
+            try
+            {
+
+                return 1;
+            }
+            catch
+            {
+                throw;
+            }
+        }
         #region Lists
         //To Get the list of Cities 
         public List<Contact> GetContacts()
@@ -104,13 +133,13 @@ namespace WebApplication10.Models
             lstCnts = (from ContactList in db.Contact select ContactList).ToList();
             return lstCnts;
         }
-        public List<User> GetUsers()
+        public IEnumerable<User> GetUsers()
         {
             List<User> lstUsrs = new List<User>();
             lstUsrs = (from UserList in db.User select UserList).ToList();
             return lstUsrs;
         }
-        public List<Department> GetDepartments()
+        public IEnumerable<Department> GetDepartments()
         {
             List<Department> lstDprts = new List<Department>();
             lstDprts = (from DepartmentList in db.Department select DepartmentList).ToList();

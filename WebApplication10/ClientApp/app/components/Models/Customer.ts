@@ -7,12 +7,12 @@ export class Customer {
    
     constructor(
         public CustomerId?: number,
-        public Name?: string,
-        public Address?: string,
-        public Email?: string,
-        public Phone?: string,
-        public Comments?: string,
-        public Contact: Contact[] = [],
-        public Department: Department[] = [],
-        public User: User[] = [] ) { }
+        public name?: string,
+        public address?: string,
+        public email?: string,
+        public phone?: string,
+        public comments?: string,
+        public contacts: Contact[] = [],
+        public departments: Department[] = [],
+        public users: User[] = [] ) { }
 }

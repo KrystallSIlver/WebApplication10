@@ -25,7 +25,7 @@ export class customerdetails implements OnInit {
     ngOnInit() {
         this._customerService.getCustomerById(this.customerId).subscribe(user => {
             this.cust = user;
-            this.contacts = this.cust.Contact;
+            this.contacts = this.cust.contacts;
             console.log(user);
             console.log(this.contacts);
         });

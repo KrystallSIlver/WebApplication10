@@ -7,7 +7,7 @@ namespace WebApplication10.Models
     {
         public Department()
         {
-            User = new HashSet<User>();
+            Users = new HashSet<User>();
         }
 
         public int DepartmentId { get; set; }
@@ -19,6 +19,6 @@ namespace WebApplication10.Models
 
         public Customer Customer { get; set; }
         public User ManagerNavigation { get; set; }
-        public ICollection<User> User { get; set; }
+        public ICollection<User> Users { get; set; }
     }
 }
