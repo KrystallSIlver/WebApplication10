@@ -2,6 +2,7 @@
 import { Http, Headers } from '@angular/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CustomerService } from '../../services/csmrservice.service'
+import { Customer } from '../Models/customer';
 
 @Component({
     templateUrl: './fetchcustomer.component.html'
@@ -9,7 +10,7 @@ import { CustomerService } from '../../services/csmrservice.service'
 
 export class FetchCustomerComponent {
 
-    public cstmrList: CutomerData[];
+    public cstmrList: Customer[] = [];
 
     constructor(public http: Http, private _router: Router, private _customerService: CustomerService) {
         this.getAllCustomers();

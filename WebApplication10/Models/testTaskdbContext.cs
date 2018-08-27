@@ -8,6 +8,14 @@ namespace WebApplication10.Models
     {
         public testTaskdbContext()
         {
+            try
+            {
+                Database.EnsureCreated();
+            }
+            catch
+            {
+                return;
+            }
         }
 
         public testTaskdbContext(DbContextOptions<testTaskdbContext> options)
@@ -22,9 +30,13 @@ namespace WebApplication10.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=testTaskdb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+                //optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=testTaskdb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+              // optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=testTaskdb3;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+                optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=testTaskdb5;");
+                optionsBuilder.EnableSensitiveDataLogging();
             }
         }
 
@@ -32,143 +44,119 @@ namespace WebApplication10.Models
         {
             modelBuilder.Entity<Contact>(entity =>
             {
-                entity.Property(e => e.ContactId).ValueGeneratedNever();
+                entity.Property(e => e.ContactId);
 
                 entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
 
                 entity.Property(e => e.Mail)
                     .IsRequired()
-                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Name)
                     .IsRequired()
-                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Phone)
                     .IsRequired()
-                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Role)
                     .IsRequired()
-                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.Customer)
-                    .WithMany(p => p.Contact)
+                    .WithMany(p => p.Contacts)
                     .HasForeignKey(d => d.CustomerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Contact__Custome__276EDEB3");
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasConstraintName("FK__Contact__Custome");
             });
 
             modelBuilder.Entity<Customer>(entity =>
             {
-                entity.Property(e => e.CustomerId).ValueGeneratedNever();
+                entity.Property(e => e.CustomerId);
 
                 entity.Property(e => e.Address)
                     .IsRequired()
-                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Comments)
-                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Email)
                     .IsRequired()
-                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Name)
                     .IsRequired()
-                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Phone)
                     .IsRequired()
-                    .HasMaxLength(20)
                     .IsUnicode(false);
             });
 
             modelBuilder.Entity<Department>(entity =>
             {
-                entity.Property(e => e.DepartmentId).ValueGeneratedNever();
+                entity.Property(e => e.DepartmentId);
 
                 entity.Property(e => e.Address)
                     .IsRequired()
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Manager)
-                    .IsRequired()
-                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Name)
                     .IsRequired()
-                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.Customer)
-                    .WithMany(p => p.Department)
+                    .WithMany(p => p.Departments)
                     .HasForeignKey(d => d.CustomerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Departmen__Custo__32E0915F");
-
-                entity.HasOne(d => d.ManagerNavigation)
-                    .WithMany(p => p.DepartmentNavigation)
-                    .HasForeignKey(d => d.ManagerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Departmen__Manag__30F848ED");
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasConstraintName("FK__Departmen__Custo");
+               
+               // entity.HasOne(d => d.Manager).WithOne(u => u.Department).IsRequired(false);
+                    //.WithOne(p => p.Department)
+                    //.HasForeignKey<User>(p=>p.UserId)
+                    //.HasForeignKey(d => d.UserId)
+                    //.OnDelete(DeleteBehavior.Restrict)
+                    //.HasConstraintName("FK__Departmen__Manag");
             });
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.Property(e => e.UserId).ValueGeneratedNever();
-
-                entity.Property(e => e.Department)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
+                entity.Property(e => e.UserId);
 
                 entity.Property(e => e.Mail)
                     .IsRequired()
-                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Mobile)
                     .IsRequired()
-                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Name)
                     .IsRequired()
-                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Password)
                     .IsRequired()
-                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.Property(e => e.UserName)
                     .IsRequired()
-                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.Customer)
-                    .WithMany(p => p.User)
+                    .WithMany(p => p.Users)
                     .HasForeignKey(d => d.CustomerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__User__CustomerId__2D27B809");
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasConstraintName("FK__User__CustomerId");
 
-                entity.HasOne(d => d.Department1)
-                    .WithMany(p => p.User)
+                entity
+                    .HasOne(d => d.Department)
+                    .WithMany(p => p.Users)
                     .HasForeignKey(d => d.DepartmentId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__User__Department__31EC6D26");
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasConstraintName("FK__User__Department");
             });
         }
     }

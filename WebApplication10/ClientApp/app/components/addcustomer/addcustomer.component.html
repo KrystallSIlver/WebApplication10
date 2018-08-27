@@ -1,20 +1,30 @@
 ﻿<h1>{{title}}</h1>
-<form [formGroup]="customerForm" (ngSubmit)="save()" *ngIf="!condition;else Contact" novalidate>
+
+<div>
+    <button type="button" class="btn" (click)="customerInf()">Basic info</button>
+    <button type="button" class="btn" (click)="addContact()">Contacts</button>
+    <button type="button" class="btn" (click)="addDepartment()">Departments</button>
+    <button type="button" class="btn" (click)="addUser()">Users</button>
+</div>
+
+<ng-container *ngIf="!addcont && !adduser && !adddep">
+    <h1 *ngIf="customerId==0">Create Customer</h1><h1 *ngIf="customerId>0">Edit Customer</h1>
+<form [formGroup]="customerForm" (ngSubmit)="save()" novalidate>
     <div class="form-group row">
         <label class="control-label col-md-12">Name</label>
         <div class="col-md-4">
             <input class="form-control" type="text" value="name" formControlName="name" />
         </div>
-        <span class="text-danger" *ngIf="name.invalid && formDir.submitted">
+        <span class="text-danger" *ngIf="name.invalid">
             Name is required.
         </span>
     </div>
     <div class="form-group row">
         <label class="control-label col-md-12" for="Address">Address</label>
         <div class="col-md-4">
-            <input class="form-control" type="text" formControlName="address" />
+            <input class="form-control" name="address" type="text" formControlName="address" />
         </div>
-        <span class="text-danger" *ngIf="address.invalid && formDir.submitted">
+        <span class="text-danger" *ngIf="address.invalid">
             Address is required
         </span>
     </div>
@@ -23,16 +33,16 @@
         <div class="col-md-4">
             <input class="form-control" type="text" formControlName="email">
         </div>
-        <span class="text-danger" *ngIf="email.invalid && formDir.submitted">
+        <span class="text-danger" *ngIf="email.invalid">
             Email is required
         </span>
     </div>
     <div class="form-group row">
-        <label class="control-label col-md-12" for="Phone">Phone</label>
+        <label class="control-label col-md-12" for="phone">Phone</label>
         <div class="col-md-4">
-            <input class="form-control" type="text" formControlName="phone">
+            <input class="form-control" type="text" id="phone" formControlName="phone">
         </div>
-        <span class="text-danger" *ngIf="phone.invalid && formDir.submitted">
+        <span class="text-danger" *ngIf="phone.invalid">
             Phone is required
         </span>
     </div>
@@ -49,47 +59,220 @@
 
 </form>
 
+</ng-container>
 
-<ng-template #Contact >
-    <form [formGroup]="contactForm" (ngSubmit)="save()">
+
+<ng-container *ngIf="addcont">
+    <form [formGroup]="contactForm" (ngSubmit)="saveContact()" novalidate>
         <div class="form-group row">
             <label class="control-label col-md-12">Name</label>
             <div class="col-md-4">
-                <input class="form-control" type="text" value="name" formControlName="name" />
+                <input class="form-control" name="cname" type="text" formControlName="name" />
             </div>
-            <span class="text-danger" *ngIf="name.invalid && formDir.submitted">
+            <span class="text-danger" *ngIf="cname.invalid && contactForm.submitted">
                 Name is required.
             </span>
         </div>
         <div class="form-group row">
-            <label class="control-label col-md-12" for="Role">Role</label>
+            <label class="control-label col-md-12" >Role</label>
             <div class="col-md-4">
-                <input class="form-control" type="text" formControlName="role" />
+                <input class="form-control" name="crole" type="text" formControlName="role" />
             </div>
-            <span class="text-danger" *ngIf="address.invalid && formDir.submitted">
-                Address is required
+            <span class="text-danger" *ngIf="crole.invalid">
+                Role is required
             </span>
         </div>
         <div class="form-group row">
-            <label class="control-label col-md-12" for="Email">Phone</label>
+            <label class="control-label col-md-12">Phone</label>
             <div class="col-md-4">
-                <input class="form-control" type="text" formControlName="phone">
+                <input class="form-control" type="text" name="cphone" formControlName="phone" />
             </div>
-            <span class="text-danger" *ngIf="email.invalid && formDir.submitted">
-                Email is required
+            <span class="text-danger" *ngIf="cphone.invalid && contactForm.submitted">
+                Phone is required
             </span>
         </div>
         <div class="form-group row">
             <label class="control-label col-md-12" for="Mail">Mail</label>
             <div class="col-md-4">
-                <input class="form-control" type="text" formControlName="mail">
+                <input class="form-control" name="cmail" type="text" formControlName="mail" />
             </div>
-            <span class="text-danger" *ngIf="mail.invalid && formDir.submitted">
-                Phone is required
+            <span class="text-danger" *ngIf="cmail.invalid && contactForm.submitted">
+                Email  is required
             </span>
         </div>
         <button type="submit" class="btn btn-default" value="submit">Save</button>
-        <button class="btn" (click)="cancel()">Cancel</button>
     </form>
 
-</ng-template>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ContactId</th>
+                <th>Contact Name</th>
+                <th>Contact Role</th>
+                <th>Contact Phone</th>
+                <th>Contact Mail</th>
+            </tr>
+            
+        </thead>
+        <tbody>
+            <tr *ngFor="let c of contacts">
+                <td>{{c.contactId}}</td>
+                <td>{{c.name}}</td>
+                <td>{{c.role}}</td>
+                <td>{{c.phone}}</td>
+                <td>{{c.mail}}</td>
+                <td>
+                    <button type="button" class="btn" (click)="rmCont(c)">Remove</button>
+                    <button type="button" class="btn" (click)="editCont(c)">Edit</button>
+                </td>
+            </tr>
+            </tbody>
+    </table>
+</ng-container>
+
+<ng-container *ngIf="adddep">
+    <form [formGroup]="depForm" (ngSubmit)="saveDepartment()" novalidate>
+        <div class="form-group row">
+            <label class="control-label col-md-12">Name</label>
+            <div class="col-md-4">
+                <input class="form-control" name="dname" type="text" formControlName="name" />
+            </div>
+            <span class="text-danger" *ngIf="dname.invalid">
+                Name is required.
+            </span>
+        </div>
+        <div class="form-group row">
+            <label class="control-label col-md-12">Address</label>
+            <div class="col-md-4">
+                <input class="form-control" name="daddress" type="text" formControlName="address" />
+            </div>
+            <span class="text-danger" *ngIf="daddress.invalid">
+                Role is required
+            </span>
+        </div>
+        <div class="form-group row">
+            <label class="control-label col-md-12" for="manager">Manager</label>
+            <div class="col-md-4">
+                <select formControlName="tempduid">
+                    <option>Default</option>
+                    <option *ngFor="let u of users" [ngValue]="u.tempuid">{{u.name}}</option>
+                </select>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-default" value="submit">Save</button>
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Dep Id</th>
+                <th>Dep Name</th>
+                <th>Dep Address</th>
+                <th>ManagerId</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            <tr *ngFor="let d of departments">
+                <td>{{d.departmentId}}</td>
+                <td>{{d.name}}</td>
+                <td>{{d.address}}</td>
+                <td>{{d.userId}}</td>
+                <td>
+                    <button type="button" class="btn" (click)="rmDepartment(d)">Remove</button>
+                    <button type="button" class="btn" (click)="editDepartment(d)">Edit</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</ng-container>
+
+<ng-container *ngIf="adduser">
+    <form [formGroup]="userForm" (ngSubmit)="saveUser()" novalidate>
+        <div class="form-group row">
+            <label class="control-label col-md-12">Name</label>
+            <div class="col-md-4">
+                <input class="form-control" name="uname" type="text" formControlName="name" />
+            </div>
+            <span class="text-danger" *ngIf="uname.invalid">
+                Name is required.
+            </span>
+        </div>
+        <div class="form-group row">
+            <label class="control-label col-md-12">Mobile</label>
+            <div class="col-md-4">
+                <input class="form-control" name="umobile" type="text" formControlName="mobile" />
+            </div>
+            <span class="text-danger" *ngIf="umobile.invalid">
+                Mobile is required
+            </span>
+        </div>
+        <div class="form-group row">
+            <label class="control-label col-md-12">Mail</label>
+            <div class="col-md-4">
+                <input class="form-control" type="text" name="umail" formControlName="mail" />
+            </div>
+            <span class="text-danger" *ngIf="umail.invalid">
+                Mail is required
+            </span>
+        </div>
+        <div class="form-group row">
+            <label class="control-label col-md-12" for="Mail">UserName</label>
+            <div class="col-md-4">
+                <input class="form-control" name="uusername" type="text" formControlName="userName" />
+            </div>
+            <span class="text-danger" *ngIf="uusername.invalid">
+                Username  is required
+            </span>
+        </div>
+        <div class="form-group row">
+            <label class="control-label col-md-12" for="Mail">Password</label>
+            <div class="col-md-4">
+                <input class="form-control" name="upassword" type="text" formControlName="password" />
+            </div>
+            <span class="text-danger" *ngIf="upassword.invalid">
+                Pwd  is required
+            </span>
+        </div>
+        <div class="form-group row">
+            <label class="control-label col-md-12" for="manager">Department</label>
+            <div class="col-md-4">
+                <select formControlName="tempudid" name="udepartmentid">
+                    <option>Default</option>
+                    <option *ngFor="let d of departments" [ngValue]="d.tempdid">{{d.name}}</option>
+                </select>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-default" value="submit">Save</button>
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>UserId</th>
+                <th>U Name</th>
+                <th>U Mob</th>
+                <th>U Mail</th>
+                <th>U Username</th>
+                <th>U Pwd</th>
+                <th>Department</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            <tr *ngFor="let u of users">
+                <td>{{u.userId}}</td>
+                <td>{{u.name}}</td>
+                <td>{{u.mobile}}</td>
+                <td>{{u.mail}}</td>
+                <td>{{u.userName}}</td>
+                <td>{{u.password}}</td>
+                <td>{{u.departmentId}}</td>
+                <td>
+                    <button type="button" class="btn" (click)="rmUser(u)">Remove</button>
+                    <button type="button" class="btn" (click)="editUser(u)">Edit</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</ng-container>
