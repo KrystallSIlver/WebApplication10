@@ -96,55 +96,56 @@ namespace WebApplication10.Models
                     }
                     i++;
                 }*/
-                foreach (User u in customer.Users)
-                {
+                
                     foreach (Department d in customer.Departments)
                     {
-                        if (u.tempudid == d.tempdid)
+                        foreach (User u in customer.Users)
                         {
+                            if (u.tempudid == d.tempdid)
+                            {
                             //    u.DepartmentId = d.DepartmentId;
                             // db.Entry(u).State = EntityState.Modified;
-                            d.Users.Add(u);
-                            
-                        }                        
+                                d.Users.Add(u);                                                                                     
+                            }                        
+                        }
                     }
-                }
+                
                 
                 db.Customer.Add(customer);
 
-                foreach (Department d in customer.Departments)
-                {
-                    foreach (User u in d.Users)
-                    {
-                        if (d.tempduid == u.tempuid)
-                        {
-                            d.Manager = u;
-                        }
-                    }
-                }
                 /*   foreach (Department d in customer.Departments)
                    {
-
-                       foreach (User u in customer.Users)
+                       foreach (User u in d.Users)
                        {
-                           if (u.tempuid == d.tempduid)
+                           if (d.tempduid == u.tempuid)
                            {
-                               d.UserId = u.UserId;
+                               d.Manager = u;
                            }
-
                        }
-
                    }
-               /*    foreach (User u in customer.Users)
-                   {
-                       foreach (Department d in customer.Departments)
-                       {
-                           if (u.tempudid == d.tempdid)
-                           {
-                               u.DepartmentId = d.DepartmentId;
-                           }
-                       }
-                   }*/
+                   /*   foreach (Department d in customer.Departments)
+                      {
+
+                          foreach (User u in customer.Users)
+                          {
+                              if (u.tempuid == d.tempduid)
+                              {
+                                  d.UserId = u.UserId;
+                              }
+
+                          }
+
+                      }
+                  /*    foreach (User u in customer.Users)
+                      {
+                          foreach (Department d in customer.Departments)
+                          {
+                              if (u.tempudid == d.tempdid)
+                              {
+                                  u.DepartmentId = d.DepartmentId;
+                              }
+                          }
+                      }*/
                 /*  foreach (Department d in customer.Departments)
                   {
                       foreach (User u in d.Users)
@@ -158,7 +159,33 @@ namespace WebApplication10.Models
                       }
 
                   }*/
-
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch
+                {
+                    foreach (Department d in customer.Departments)
+                    {
+                        d.UserId = null;
+                    }
+                    db.SaveChanges();
+                }
+                foreach (Department d in customer.Departments)
+                {
+                    foreach (User u in d.Users)
+                    {
+                        if (d.tempduid == u.tempuid)
+                        {
+                            User tUser = db.User.FirstOrDefault(p => p == u);
+                            Console.WriteLine(tUser);
+                            d.User = tUser;
+                            d.UserId = tUser.UserId;
+                            db.Entry(d).State = EntityState.Modified;
+                            
+                        }
+                    }
+                }
                 db.SaveChanges();
                 return 1;
             }
@@ -168,6 +195,8 @@ namespace WebApplication10.Models
             }
         }
         //To Update the records of a particluar employee  
+
+            //Сделать Update всей модели!
         public int UpdateCustomer(Customer customer)
         {
            /* foreach (Contact c in customer.Contacts)
@@ -202,7 +231,10 @@ namespace WebApplication10.Models
         {
             try
             {
-                Customer customer = db.Customer.Include(c => c.Contacts).FirstOrDefault(c => c.CustomerId == id);
+                Customer customer = db.Customer.Include(c => c.Contacts)
+                    .Include(d=>d.Departments)
+                    .Include(u=>u.Users)
+                    .FirstOrDefault(c => c.CustomerId == id);
                 return customer;
             }
             catch

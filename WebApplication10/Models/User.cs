@@ -7,9 +7,6 @@ namespace WebApplication10.Models
 {
     public partial class User
     {
-        public User() {
-            Departments = new HashSet<Department>();
-        }
         public int UserId { get; set; }
         public string Name { get; set; }
         public string Mobile { get; set; }
@@ -27,6 +24,5 @@ namespace WebApplication10.Models
         public Customer Customer { get; set; }
         [ForeignKey("DepartmentId")]
         public Department Department { get; set; }
-        public ICollection<Department> Departments { get; set; }
     }
 }

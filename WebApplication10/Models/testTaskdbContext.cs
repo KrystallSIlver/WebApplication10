@@ -112,8 +112,8 @@ namespace WebApplication10.Models
                     .HasForeignKey(d => d.CustomerId)
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK__Departmen__Custo");
-
-                entity.HasOne(d => d.User);
+               
+               // entity.HasOne(d => d.Manager).WithOne(u => u.Department).IsRequired(false);
                     //.WithOne(p => p.Department)
                     //.HasForeignKey<User>(p=>p.UserId)
                     //.HasForeignKey(d => d.UserId)

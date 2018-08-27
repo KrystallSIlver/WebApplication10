@@ -7,7 +7,7 @@ export class Department {
         public name?: string,
         public address?: string,
         public customerId?: number,
-        public userid?: number,
+        public userId?: number,
         public customer?: Customer,
         public user?: User,
         public tempdid?: number,

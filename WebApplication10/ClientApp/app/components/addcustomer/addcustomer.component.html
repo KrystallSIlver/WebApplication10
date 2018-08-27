@@ -174,10 +174,10 @@
         </thead>
         <tbody>
             <tr *ngFor="let d of departments">
-                <td>{{d.departmentId}}{{d.tempdid}}</td>
+                <td>{{d.departmentId}}</td>
                 <td>{{d.name}}</td>
                 <td>{{d.address}}</td>
-                <td>{{d.tempduid}}</td>
+                <td>{{d.userId}}</td>
                 <td>
                     <button type="button" class="btn" (click)="rmDepartment(d)">Remove</button>
                     <button type="button" class="btn" (click)="editDepartment(d)">Edit</button>
@@ -219,7 +219,7 @@
         <div class="form-group row">
             <label class="control-label col-md-12" for="Mail">UserName</label>
             <div class="col-md-4">
-                <input class="form-control" name="uusername" type="text" formControlName="username" />
+                <input class="form-control" name="uusername" type="text" formControlName="userName" />
             </div>
             <span class="text-danger" *ngIf="uusername.invalid">
                 Username  is required
@@ -261,13 +261,13 @@
         </thead>
         <tbody>
             <tr *ngFor="let u of users">
-                <td>{{u.tempuid}}{{u.userid}}</td>
+                <td>{{u.userId}}</td>
                 <td>{{u.name}}</td>
                 <td>{{u.mobile}}</td>
                 <td>{{u.mail}}</td>
-                <td>{{u.username}}</td>
+                <td>{{u.userName}}</td>
                 <td>{{u.password}}</td>
-                <td>{{u.tempudid}}</td>
+                <td>{{u.departmentId}}</td>
                 <td>
                     <button type="button" class="btn" (click)="rmUser(u)">Remove</button>
                     <button type="button" class="btn" (click)="editUser(u)">Edit</button>

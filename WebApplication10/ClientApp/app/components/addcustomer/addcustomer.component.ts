@@ -74,7 +74,7 @@ export class createcustomer implements OnInit {
             name: new FormControl('', [Validators.required, Validators.minLength(1)]),
             mobile: new FormControl('', [Validators.required, Validators.minLength(1)]),
             mail: new FormControl('', [Validators.required, Validators.minLength(1)]),
-            username: new FormControl('', [Validators.required, Validators.minLength(1)]),
+            userName: new FormControl('', [Validators.required, Validators.minLength(1)]),
             tempudid: new FormControl('', [Validators.required, Validators.minLength(1)]),
             password: new FormControl('', [Validators.required, Validators.minLength(1)]),
 
@@ -177,12 +177,13 @@ export class createcustomer implements OnInit {
     addUser() {
         this.customerInf();
         this.adduser = true;
+        console.log(this.users);
     }
     rmUser(user: User) {
         for (let i = 0; i < this.users.length;i++) {
             if (this.users[i] == user) {
                 if (this.title != "Create") {
-                    this.fulldata.userstodelete.push(user.userid);
+                    this.fulldata.userstodelete.push(user.userId);
                 }
                 this.users.splice(i, 1);
                 break;
@@ -240,6 +241,7 @@ export class createcustomer implements OnInit {
             for (let i = 0; i < this.contacts.length; i++) {
                 if (this.contacts[i] == this.econtact) {
                     this.contact.contactId = this.econtact.contactId;
+                    
                     this.contacts[i] = this.contact;
                     break;
                 }
@@ -259,17 +261,23 @@ export class createcustomer implements OnInit {
         if (!this.edit) {
             this.department.tempdid = this.did;
             console.log(this.department);
-            this.department.departmentId = this.department.tempdid;
+            //this.department.departmentId = this.department.tempdid;
             this.departments.push(this.department);
             this.did--;
         }
         else if (this.edit == true) {
             for (let i = 0; i < this.departments.length; i++) {
                 if (this.departments[i] == this.edepartment) {
+                    console.log(this.edepartment);
                     this.department.tempdid = this.edepartment.tempdid;
                     this.department.departmentId = this.edepartment.departmentId;
-                    this.department.userid = this.department.tempduid;
-                    console.log(this.department);
+                    
+                    if (this.title != "Edit") {
+                        this.department.userId = this.department.tempduid;                        
+                    }
+                    else {
+                        this.department.userId = this.edepartment.userId;
+                    }
                     this.departments[i] = this.department;
                     break;
                 }
@@ -284,8 +292,8 @@ export class createcustomer implements OnInit {
         console.log(this.user);
         if (!this.edit) {
             this.user.tempuid = this.uid;
-            this.user.userid = this.user.tempuid;
-            this.user.departmentid = this.user.tempudid;
+            //this.user.userid = this.user.tempuid;
+            //this.user.departmentid = this.user.tempudid;
             console.log(this.user);
             this.users.push(this.user);
             console.log(this.users);
@@ -294,9 +302,14 @@ export class createcustomer implements OnInit {
         else if (this.edit) {
             for (let i = 0; i < this.users.length; i++) {
                 if (this.users[i] == this.euser) {
-                    this.user.userid = this.euser.userid;
+                    this.user.userId = this.euser.userId;
                     this.user.tempuid = this.euser.tempuid;
-                    this.user.departmentid = this.user.tempudid;
+                    if (this.title != "Edit") {
+                        this.user.departmentId = this.user.tempudid;
+                    }
+                    else {
+                        this.user.departmentId = this.euser.departmentId;
+                    }
                     this.users[i] = this.user;
                     break;
                 }
@@ -329,7 +342,7 @@ export class createcustomer implements OnInit {
     get uname() { return this.userForm.get('name'); }
     get umobile() { return this.userForm.get('mobile'); }
     get umail() { return this.userForm.get('mail'); }
-    get uusername() { return this.userForm.get('username'); }
+    get uusername() { return this.userForm.get('userName'); }
     get upassword() { return this.userForm.get('password'); }
     get udepartmentid() { return this.userForm.get('tempudid') }
 }  
