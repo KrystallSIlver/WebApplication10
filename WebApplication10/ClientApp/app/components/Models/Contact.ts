@@ -2,7 +2,7 @@
 
 export class Contact {
     constructor(
-        public contactId?: number,
+        public contactId: number,
         public name?: string,
         public role?: string,
         public phone?: string,

@@ -10,7 +10,7 @@ import { Customer } from '../Models/customer';
 
 export class FetchCustomerComponent {
 
-    public cstmrList: Customer[];
+    public cstmrList: Customer[] = [];
 
     constructor(public http: Http, private _router: Router, private _customerService: CustomerService) {
         this.getAllCustomers();

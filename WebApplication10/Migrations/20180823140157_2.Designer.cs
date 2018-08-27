@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplication10.Models;
 
 namespace WebApplication10.Migrations
 {
     [DbContext(typeof(testTaskdbContext))]
-    partial class testTaskdbContextModelSnapshot : ModelSnapshot
+    [Migration("20180823140157_2")]
+    partial class _2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,8 +94,6 @@ namespace WebApplication10.Migrations
 
                     b.Property<int>("CustomerId");
 
-                    b.Property<int>("ManagerUserId");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .IsUnicode(false);
@@ -103,8 +103,6 @@ namespace WebApplication10.Migrations
                     b.HasKey("DepartmentId");
 
                     b.HasIndex("CustomerId");
-
-                    b.HasIndex("ManagerUserId");
 
                     b.HasIndex("UserId");
 
@@ -166,11 +164,6 @@ namespace WebApplication10.Migrations
                         .HasForeignKey("CustomerId")
                         .HasConstraintName("FK__Departmen__Custo")
                         .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("WebApplication10.Models.User", "Manager")
-                        .WithMany()
-                        .HasForeignKey("ManagerUserId")
-                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("WebApplication10.Models.User", "User")
                         .WithMany()

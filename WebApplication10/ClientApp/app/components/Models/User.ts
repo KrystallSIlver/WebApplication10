@@ -2,15 +2,18 @@
 import { Department } from "./department"
 export class User {
     constructor(
-        public userId?: number,
+        public userid: number,
         public name?: string,
         public mobile?: string,
         public mail?: string,
         public username?: string,
-        public departmentName?: string,
         public password?: string,
-        public customerId?: number,
-        public departmentId?:number,
+        public customerid?: number,
+        public departmentid?:number,
         public customer?: Customer,
-        public department?: Department) { }
+        public department?: Department,
+        public tempuid?: number,
+        public tempudid?: number
+
+        ) { }
 }

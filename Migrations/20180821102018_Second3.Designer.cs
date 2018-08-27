@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplication10.Models;
 
 namespace WebApplication10.Migrations
 {
     [DbContext(typeof(testTaskdbContext))]
-    partial class testTaskdbContextModelSnapshot : ModelSnapshot
+    [Migration("20180821102018_Second3")]
+    partial class Second3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,8 +94,6 @@ namespace WebApplication10.Migrations
 
                     b.Property<int>("CustomerId");
 
-                    b.Property<int>("ManagerUserId");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .IsUnicode(false);
@@ -103,8 +103,6 @@ namespace WebApplication10.Migrations
                     b.HasKey("DepartmentId");
 
                     b.HasIndex("CustomerId");
-
-                    b.HasIndex("ManagerUserId");
 
                     b.HasIndex("UserId");
 
@@ -167,15 +165,11 @@ namespace WebApplication10.Migrations
                         .HasConstraintName("FK__Departmen__Custo")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("WebApplication10.Models.User", "Manager")
-                        .WithMany()
-                        .HasForeignKey("ManagerUserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("WebApplication10.Models.User", "User")
-                        .WithMany()
+                        .WithMany("Departments")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasConstraintName("FK__Departmen__Manag")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("WebApplication10.Models.User", b =>

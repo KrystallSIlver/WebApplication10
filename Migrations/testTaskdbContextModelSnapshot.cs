@@ -92,8 +92,6 @@ namespace WebApplication10.Migrations
 
                     b.Property<int>("CustomerId");
 
-                    b.Property<int>("ManagerUserId");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .IsUnicode(false);
@@ -103,8 +101,6 @@ namespace WebApplication10.Migrations
                     b.HasKey("DepartmentId");
 
                     b.HasIndex("CustomerId");
-
-                    b.HasIndex("ManagerUserId");
 
                     b.HasIndex("UserId");
 
@@ -167,15 +163,11 @@ namespace WebApplication10.Migrations
                         .HasConstraintName("FK__Departmen__Custo")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("WebApplication10.Models.User", "Manager")
-                        .WithMany()
-                        .HasForeignKey("ManagerUserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("WebApplication10.Models.User", "User")
-                        .WithMany()
+                        .WithMany("Departments")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasConstraintName("FK__Departmen__Manag")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("WebApplication10.Models.User", b =>

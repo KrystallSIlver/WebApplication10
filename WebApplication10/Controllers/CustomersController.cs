@@ -21,6 +21,11 @@ namespace WebApplication10.Controllers
         [HttpPost("api/Customers/Create")]
         public IActionResult Create([FromBody] Customer customer)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             return Ok(customerData.AddCustomer(customer));
         }
 

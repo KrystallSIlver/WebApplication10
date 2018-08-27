@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplication10.Models;
 
 namespace WebApplication10.Migrations
 {
     [DbContext(typeof(testTaskdbContext))]
-    partial class testTaskdbContextModelSnapshot : ModelSnapshot
+    [Migration("20180821100256_Fir1")]
+    partial class Fir1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,8 +94,6 @@ namespace WebApplication10.Migrations
 
                     b.Property<int>("CustomerId");
 
-                    b.Property<int>("ManagerUserId");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .IsUnicode(false);
@@ -103,8 +103,6 @@ namespace WebApplication10.Migrations
                     b.HasKey("DepartmentId");
 
                     b.HasIndex("CustomerId");
-
-                    b.HasIndex("ManagerUserId");
 
                     b.HasIndex("UserId");
 
@@ -155,8 +153,8 @@ namespace WebApplication10.Migrations
                     b.HasOne("WebApplication10.Models.Customer", "Customer")
                         .WithMany("Contacts")
                         .HasForeignKey("CustomerId")
-                        .HasConstraintName("FK__Contact__Custome")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasConstraintName("FK__Contact__Custome__276EDEB3")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("WebApplication10.Models.Department", b =>
@@ -164,17 +162,13 @@ namespace WebApplication10.Migrations
                     b.HasOne("WebApplication10.Models.Customer", "Customer")
                         .WithMany("Departments")
                         .HasForeignKey("CustomerId")
-                        .HasConstraintName("FK__Departmen__Custo")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("WebApplication10.Models.User", "Manager")
-                        .WithMany()
-                        .HasForeignKey("ManagerUserId")
+                        .HasConstraintName("FK__Departmen__Custo__32E0915F")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("WebApplication10.Models.User", "User")
-                        .WithMany()
+                        .WithMany("Departments")
                         .HasForeignKey("UserId")
+                        .HasConstraintName("FK__Departmen__Manag__30F848ED")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -183,14 +177,14 @@ namespace WebApplication10.Migrations
                     b.HasOne("WebApplication10.Models.Customer", "Customer")
                         .WithMany("Users")
                         .HasForeignKey("CustomerId")
-                        .HasConstraintName("FK__User__CustomerId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasConstraintName("FK__User__CustomerId__2D27B809")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("WebApplication10.Models.Department", "Department")
                         .WithMany("Users")
                         .HasForeignKey("DepartmentId")
-                        .HasConstraintName("FK__User__Department")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasConstraintName("FK__User__Department__31EC6D26")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

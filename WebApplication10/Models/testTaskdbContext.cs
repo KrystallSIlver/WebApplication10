@@ -8,6 +8,14 @@ namespace WebApplication10.Models
     {
         public testTaskdbContext()
         {
+            try
+            {
+                Database.EnsureCreated();
+            }
+            catch
+            {
+                return;
+            }
         }
 
         public testTaskdbContext(DbContextOptions<testTaskdbContext> options)
@@ -26,7 +34,8 @@ namespace WebApplication10.Models
             if (!optionsBuilder.IsConfigured)
             {
                 //optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=testTaskdb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
-                optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=testTaskdb3;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+              // optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=testTaskdb3;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+                optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=testTaskdb5;");
                 optionsBuilder.EnableSensitiveDataLogging();
             }
         }
@@ -58,8 +67,8 @@ namespace WebApplication10.Models
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Contacts)
                     .HasForeignKey(d => d.CustomerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Contact__Custome__276EDEB3");
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasConstraintName("FK__Contact__Custome");
             });
 
             modelBuilder.Entity<Customer>(entity =>
@@ -94,10 +103,6 @@ namespace WebApplication10.Models
                     .IsRequired()
                     .IsUnicode(false);
 
-                entity.Property(e => e.Manager)
-                    .IsRequired()
-                    .IsUnicode(false);
-
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .IsUnicode(false);
@@ -105,23 +110,20 @@ namespace WebApplication10.Models
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Departments)
                     .HasForeignKey(d => d.CustomerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Departmen__Custo__32E0915F");
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasConstraintName("FK__Departmen__Custo");
 
-                entity.HasOne(d => d.ManagerNavigation)
-                    .WithMany(p => p.DepartmentNavigation)
-                    .HasForeignKey(d => d.ManagerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Departmen__Manag__30F848ED");
+                entity.HasOne(d => d.User);
+                    //.WithOne(p => p.Department)
+                    //.HasForeignKey<User>(p=>p.UserId)
+                    //.HasForeignKey(d => d.UserId)
+                    //.OnDelete(DeleteBehavior.Restrict)
+                    //.HasConstraintName("FK__Departmen__Manag");
             });
 
             modelBuilder.Entity<User>(entity =>
             {
                 entity.Property(e => e.UserId);
-
-                entity.Property(e => e.Department)
-                    .IsRequired()
-                    .IsUnicode(false);
 
                 entity.Property(e => e.Mail)
                     .IsRequired()
@@ -146,14 +148,15 @@ namespace WebApplication10.Models
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.CustomerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__User__CustomerId__2D27B809");
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasConstraintName("FK__User__CustomerId");
 
-                entity.HasOne(d => d.Department1)
+                entity
+                    .HasOne(d => d.Department)
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.DepartmentId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__User__Department__31EC6D26");
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasConstraintName("FK__User__Department");
             });
         }
     }

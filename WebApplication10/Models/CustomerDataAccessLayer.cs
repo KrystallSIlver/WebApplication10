@@ -30,23 +30,135 @@ namespace WebApplication10.Models
         {
             try
             {
-              /*  int i = 1;
-               // customer.CustomerId = db.Customer.Max(x => x.CustomerId)+1;
-                foreach (var c in customer.Contacts)
+               /*  int i = 1;
+                  customer.CustomerId = db.Customer.Max(x => x.CustomerId)+1;
+                  foreach (var c in customer.Contacts)
+                  {
+
+                      c.CustomerId = customer.CustomerId;
+                      try
+                      {
+                          c.ContactId = db.Contact.Max(x => x.ContactId) + i;
+                          i++;
+                      }
+                      catch
+                      {
+                          c.ContactId = 0;
+                      }
+                  }*/
+                
+              /*foreach (Department d in customer.Departments)
                 {
-                   
-                    c.CustomerId = customer.CustomerId;
-                    try
+                     int i = 1;
+
+                    if (d.DepartmentId == 0)
                     {
-                        c.ContactId = db.Contact.Max(x => x.ContactId) + i;
-                        i++;
+                     try{
+                         d.DepartmentId = db.Department.Max(x=>x.DepartmentId)+i;
+                         }
+                     catch {
+                         d.DepartmentId = 0;
+                     }
+                    d.UserId = 0;
+                       db.Department.Add(d);
+                        db.SaveChanges();
                     }
-                    catch
-                    {
-                        c.ContactId = 0;
-                    }
+                    i++;
                 }*/
+
+              /*  foreach (User u in customer.Users)
+                {
+                     int i = 1;
+                     if (u.UserId == 0)
+                    {
+                      if (u.DepartmentId == 0)
+                      {
+                          foreach (Department d in customer.Departments)
+                          {
+                              if (d.tempid == u.tempid)
+                              {
+                                  u.DepartmentId = d.DepartmentId;
+                                  break;
+                              }
+                          }
+                      }
+                       try
+                       {
+                           u.UserId = db.User.Max(x=>x.UserId)+i;
+                       }
+                       catch
+                       {
+                           u.UserId = 0;
+                       }
+
+                    db.User.Add(u);
+                    db.SaveChanges();
+                    }
+                    i++;
+                }*/
+                foreach (User u in customer.Users)
+                {
+                    foreach (Department d in customer.Departments)
+                    {
+                        if (u.tempudid == d.tempdid)
+                        {
+                            //    u.DepartmentId = d.DepartmentId;
+                            // db.Entry(u).State = EntityState.Modified;
+                            d.Users.Add(u);
+                            
+                        }                        
+                    }
+                }
+                
                 db.Customer.Add(customer);
+
+                foreach (Department d in customer.Departments)
+                {
+                    foreach (User u in d.Users)
+                    {
+                        if (d.tempduid == u.tempuid)
+                        {
+                            d.Manager = u;
+                        }
+                    }
+                }
+                /*   foreach (Department d in customer.Departments)
+                   {
+
+                       foreach (User u in customer.Users)
+                       {
+                           if (u.tempuid == d.tempduid)
+                           {
+                               d.UserId = u.UserId;
+                           }
+
+                       }
+
+                   }
+               /*    foreach (User u in customer.Users)
+                   {
+                       foreach (Department d in customer.Departments)
+                       {
+                           if (u.tempudid == d.tempdid)
+                           {
+                               u.DepartmentId = d.DepartmentId;
+                           }
+                       }
+                   }*/
+                /*  foreach (Department d in customer.Departments)
+                  {
+                      foreach (User u in d.Users)
+                      {
+                          if (d.tempduid == u.tempuid)
+                          {
+                              d.UserId = u.UserId;
+                              //db.Entry(d).State = EntityState.Modified;
+
+                          }
+                      }
+
+                  }*/
+
                 db.SaveChanges();
                 return 1;
             }
@@ -58,10 +170,10 @@ namespace WebApplication10.Models
         //To Update the records of a particluar employee  
         public int UpdateCustomer(Customer customer)
         {
-            foreach (Contact c in customer.Contacts)
+           /* foreach (Contact c in customer.Contacts)
             {                
                     c.CustomerId = customer.CustomerId; 
-            }
+            }*/
             try
             {
                 db.Entry(customer).State = EntityState.Modified;
