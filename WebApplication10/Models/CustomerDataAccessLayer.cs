@@ -84,6 +84,7 @@ namespace WebApplication10.Models
         public int UpdateCustomer(FullData fullData)
         {
             //Remove
+            #region Remove
             foreach (int i in fullData.contactstodelete)
             {
               //Contact c = db.Contact.FirstOrDefault(x => x.ContactId == i);
@@ -92,27 +93,80 @@ namespace WebApplication10.Models
             foreach (int y in fullData.depstodelete)
             {
                 Department d = db.Department.Include(u=>u.Users).FirstOrDefault(x => x.DepartmentId == y);
-                              
-                    db.Department.Remove(d);
-                
-                
+                    db.Department.Remove(d);                
             }
-            try
+            foreach (int b in fullData.userstodelete)
             {
-                foreach (int b in fullData.userstodelete)
+                //User u = db.User.FirstOrDefault(x => x.UserId == b);
+                db.User.Remove(db.User.FirstOrDefault(x => x.UserId == b));
+            }
+            #endregion
+
+            foreach (Contact c in fullData.customer.Contacts)
+            {
+                if (c.ContactId > 0)
                 {
-                    //User u = db.User.FirstOrDefault(x => x.UserId == b);
-                    db.User.Remove(db.User.FirstOrDefault(x => x.UserId == b));
+                    db.Entry(c).State = EntityState.Modified;
+                }
+                else
+                {
+                    db.Entry(c).State = EntityState.Added;
                 }
             }
-            catch
-            {
 
+            foreach (Department d in fullData.customer.Departments)
+            {
+                foreach (User u in fullData.customer.Users)
+                {
+                    if (d.tempdid == u.tempudid && d.tempdid<0)
+                    {
+                        d.Users.Add(u);
+                    }
+                }
+                if (d.DepartmentId > 0)
+                {
+                    db.Entry(d).State = EntityState.Modified;
+                }
+                else
+                {                    
+                    db.Entry(d).State = EntityState.Added;
+                }
             }
+
+            foreach (User u in fullData.customer.Users)
+                if (u.UserId > 0)
+                {
+                    db.Entry(u).State = EntityState.Modified;
+                }
+                else
+                {
+                    db.Entry(u).State = EntityState.Added;
+                }
+            
 
           try
             {
                 db.Entry(fullData.customer).State = EntityState.Modified;
+                db.SaveChanges();
+                foreach (Department d in fullData.customer.Departments)
+                {
+                    if (d.UserId != null)
+                    {
+                        continue;
+                    }
+                    foreach (User u in d.Users)
+                    {
+                        if (d.tempduid == u.tempuid || d.tempduid == u.UserId)
+                        {
+                            User tUser = db.User.FirstOrDefault(p => p == u);
+                            Console.WriteLine(tUser);
+                            d.User = tUser;
+                            d.UserId = tUser.UserId;
+                            db.Entry(d).State = EntityState.Modified;
+
+                        }
+                    }
+                }
                 db.SaveChanges();
                 return 1;
             }

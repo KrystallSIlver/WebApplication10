@@ -11,6 +11,7 @@ import { User } from '../Models/User';
 import { Department } from '../Models/department';
 import { forEach } from '@angular/router/src/utils/collection';
 import { FullData } from '../Models/FullData';
+import { concat } from 'rxjs/observable/concat';
 
 @Component({
     templateUrl: './AddCustomer.component.html'
@@ -41,9 +42,9 @@ export class createcustomer implements OnInit {
     user: User = new User(0);
     euser: User = new User(0);
     users: User[] = [];
-    uid: number = 0;
-    did: number = 0;
-    cid: number = 0;
+    uid: number = -1;
+    did: number = -1;
+    cid: number = -1;
 
     department: Department = new Department(0);
     edepartment: Department = new Department(0);
@@ -258,6 +259,7 @@ export class createcustomer implements OnInit {
             //this.department.departmentId = this.department.tempdid;
             this.departments.push(this.department);
             this.did--;
+            console.log(this.department);
         }
         else if (this.edit == true) {
             for (let i = 0; i < this.departments.length; i++) {
@@ -271,8 +273,12 @@ export class createcustomer implements OnInit {
                     }
                     else {
                         this.department.userId = this.edepartment.userId;
+                        //if (this.department.tempduid != undefined && this.department.tempduid > 0) {
+                        //    this.department.userId = this.department.tempduid;
+                        //}
                     }
                     this.departments[i] = this.department;
+                    console.log(this.department);
                     break;
                 }
             }
@@ -289,7 +295,12 @@ export class createcustomer implements OnInit {
             //this.user.userid = this.user.tempuid;
             //this.user.departmentid = this.user.tempudid;
             console.log(this.user);
-            this.users.push(this.user);
+            if (this.title != "Edit") {
+                this.users.push(this.user);
+            }
+            else {
+                this.users.push(this.user);
+            }
             console.log(this.users);
             this.uid--;
         }
@@ -303,8 +314,13 @@ export class createcustomer implements OnInit {
                     }
                     else {
                         this.user.departmentId = this.euser.departmentId;
+                        if (this.user.tempudid != undefined && this.user.tempudid > 0) {
+                            this.user.departmentId = this.user.tempudid;
+                        }
+                        
                     }
                     this.users[i] = this.user;
+                    console.log(this.user);
                     break;
                 }
             }

@@ -13,7 +13,7 @@ export class User {
         public customer?: Customer,
         public department?: Department,
         public tempuid?: number,
-        public tempudid?: number
+        public tempudid?: number,
 
         ) { }
 }

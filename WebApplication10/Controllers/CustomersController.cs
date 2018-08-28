@@ -38,6 +38,10 @@ namespace WebApplication10.Controllers
         [HttpPut("api/Customers/Edit")]
         public IActionResult Edit([FromBody]FullData customer)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             return Ok(customerData.UpdateCustomer(customer));
         }
 

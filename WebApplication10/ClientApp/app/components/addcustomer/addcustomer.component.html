@@ -237,10 +237,11 @@
         <div class="form-group row">
             <label class="control-label col-md-12" for="manager">Department</label>
             <div class="col-md-4">
+                <ng-container >
                 <select formControlName="tempudid" name="udepartmentid">
-                    <option>Default</option>
-                    <option *ngFor="let d of departments" [ngValue]="d.tempdid">{{d.name}}</option>
+                    <option  *ngFor="let d of departments" [ngValue]="d.tempdid">{{d.name}}</option>
                 </select>
+                    </ng-container>
             </div>
         </div>
         <button type="submit" class="btn btn-default" value="submit">Save</button>
