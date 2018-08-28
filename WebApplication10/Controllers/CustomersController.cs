@@ -36,7 +36,7 @@ namespace WebApplication10.Controllers
         }
 
         [HttpPut("api/Customers/Edit")]
-        public IActionResult Edit([FromBody]Customer customer)
+        public IActionResult Edit([FromBody]FullData customer)
         {
             return Ok(customerData.UpdateCustomer(customer));
         }

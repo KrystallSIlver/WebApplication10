@@ -48,7 +48,7 @@ export class createcustomer implements OnInit {
     department: Department = new Department(0);
     edepartment: Department = new Department(0);
     departments: Department[] = [];
-    cust: Customer = new Customer();
+  //  cust: Customer = new Customer();
     customer: Customer = new Customer();
 
     constructor(private _fb: FormBuilder, private _avRoute: ActivatedRoute,
@@ -106,9 +106,7 @@ export class createcustomer implements OnInit {
             this._customerService.getCustomerById(this.customerId)
                 .subscribe((resp: Customer) => {
                     this.customer = resp;
-                    this.contacts = this.customer.contacts;
-                    this.departments = this.customer.departments;
-                    this.users = this.customer.users;
+                    this.fulldata.customer = this.customer;
                     this.LoadData();
                 }
                 , error => this.errorMessage = error);            
@@ -122,15 +120,11 @@ export class createcustomer implements OnInit {
             return;
         }
         this.customer = this.customerForm.value;
-    /*    this.customer.name = this.cust.name;
-        this.customer.address = this.cust.address;
-        this.customer.comments = this.cust.comments;
-        this.customer.email = this.cust.email;
-        this.customer.phone = this.cust.phone;*/
         this.customer.contacts = this.contacts;
         this.customer.users = this.users;
         this.customer.departments = this.departments;
         console.log(this.customer)
+        this.fulldata.customer = this.customer;
         if (this.title == "Create") {
                 this._customerService.saveCustomer(this.customer)
                 .subscribe((data) => {
@@ -139,8 +133,8 @@ export class createcustomer implements OnInit {
         }
 
         else if (this.title == "Edit") {
-            console.log("edit" + this.customer)
-            this._customerService.updateCustomer(this.customer)
+            console.log("edit" + this.fulldata)
+            this._customerService.updateCustomer(this.fulldata)
                 .subscribe((data) => {
                     this._router.navigate(['/fetch-customer']);
                 }, error => this.errorMessage = error)
@@ -155,8 +149,9 @@ export class createcustomer implements OnInit {
         for (let i = 0; i < this.contacts.length;i++)
         {
             if (this.contacts[i] == contact) {
-                if (this.title != "Create") {
+                if (this.title != "Create" && contact.contactId>0) {
                     this.fulldata.contactstodelete.push(contact.contactId);
+                    console.log(this.fulldata.contactstodelete);
                 }
                 this.contacts.splice(i,1);
                 break;
@@ -231,7 +226,6 @@ export class createcustomer implements OnInit {
         this.contact = this.contactForm.value;
         console.log(this.contacts);
         if (!this.edit) {
-           // this.contact.contactId = this.cid;
             this.contact.customerid = 0;
             this.contacts.push(this.contact);
             this.cid--;

@@ -34,8 +34,8 @@ export class CustomerService {
             .catch(this.errorHandler)
     }
 
-    updateCustomer(customer) {
-        return this._http.put(this.myAppUrl + 'api/Customers/Edit', customer)
+    updateCustomer(fulldata) {
+        return this._http.put(this.myAppUrl + 'api/Customers/Edit', fulldata)
             .map((response: Response) => response.json())
             .catch(this.errorHandler);
     }

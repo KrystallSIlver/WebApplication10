@@ -1,12 +1,36 @@
-﻿<table class='table'>
-        <tr>CustomerId : {{cust.customerId}}</tr>
-        <tr>Name : {{cust.name}}</tr>
-        <tr>Address : {{cust.address}}</tr>
-        <tr>Email : {{cust.email}}</tr>
-        <tr>Phone : {{cust.phone}}</tr>
-        <tr>Comments : {{cust.comments}}</tr>
-    </table>
-    <h2>Contacts</h2>
+﻿<h1>Details</h1>
+
+<div class="container-fluid">
+    <ul class="nav navbar-nav">
+        <li>
+            <button type="button" class="btn btn-lg" (click)="general()">Basic info</button>
+        </li>
+        <li>
+            <button type="button" class="btn btn-lg" (click)="cont()">Contacts</button>
+        </li>
+        <li>
+            <button type="button" class="btn btn-lg" (click)="dep()">Departments</button>
+        </li>
+        <li>
+            <button type="button" class="btn btn-lg" (click)="user()">Users</button>
+            </li>
+    </ul>
+</div>
+
+<ng-container *ngIf="generalinfo">
+    <h2>General Info</h2>
+        <div class="">
+            <p> <strong>Id</strong> : {{cust.customerId}}</p>
+            <p> <strong>Name</strong> : {{cust.name}}</p>
+            <p> <strong>Address</strong> : {{cust.address}}</p>
+            <p> <strong>Email </strong>: {{cust.email}}</p>
+            <p> <strong>Phone </strong>: {{cust.phone}}</p>
+            <p> <strong>Comments </strong>: {{cust.comments}}</p>
+        </div>
+</ng-container>
+
+<ng-container *ngIf="contactinfo">
+    <h2>Contacts Info</h2>
     <table class="table">   
     <thead>
             <tr>
@@ -28,3 +52,62 @@
         </tr>
         </tbody>
         </table>
+</ng-container>
+
+<ng-container *ngIf="depinfo">
+    <h2>Departments Info</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Department Id</th>
+                <th>Department Name</th>
+                <th>Department Address</th>
+                <th>Department ManagerId</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let d of cust.departments">
+                <td>{{d.departmentId}}</td>
+                <td>{{d.name}}</td>
+                <td>{{d.address}}</td>
+                <td>{{d.userId}}</td>
+            </tr>
+        </tbody>
+
+    </table>
+    
+</ng-container>
+
+<ng-container *ngIf="userinfo">
+    <h2>Users Info</h2>
+    <table class="table">
+        <thead>
+            <tr>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Mobile</th>
+                <th>Mail</th>
+                <th>Username</th>
+                <th>Password</th>
+                <th>Department</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            <tr *ngFor="let u of cust.users">
+                <td>{{u.userId}}</td>
+                <td>{{u.name}}</td>
+                <td>{{u.mobile}}</td>
+                <td>{{u.mail}}</td>
+                <td>{{u.userName}}</td>
+                <td>{{u.password}}</td>
+                <td>{{u.departmentId}}</td>
+            </tr>
+        </tbody>
+
+    </table>
+
+</ng-container>
+
+<button class="btn btn-lg" (click)="return()">Back to customer list</button>

@@ -67,7 +67,7 @@ namespace WebApplication10.Models
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Contacts)
                     .HasForeignKey(d => d.CustomerId)
-                    .OnDelete(DeleteBehavior.Restrict)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK__Contact__Custome");
             });
 
@@ -110,7 +110,7 @@ namespace WebApplication10.Models
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Departments)
                     .HasForeignKey(d => d.CustomerId)
-                    .OnDelete(DeleteBehavior.Restrict)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK__Departmen__Custo");
                
                // entity.HasOne(d => d.Manager).WithOne(u => u.Department).IsRequired(false);
@@ -148,14 +148,15 @@ namespace WebApplication10.Models
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.CustomerId)
-                    .OnDelete(DeleteBehavior.Restrict)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK__User__CustomerId");
 
                 entity
                     .HasOne(d => d.Department)
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.DepartmentId)
-                    .OnDelete(DeleteBehavior.Restrict)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .IsRequired(false)
                     .HasConstraintName("FK__User__Department");
             });
         }
