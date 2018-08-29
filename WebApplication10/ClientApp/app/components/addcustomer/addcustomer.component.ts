@@ -9,7 +9,6 @@ import { Customer } from '../Models/Customer';
 import { Observable } from 'rxjs';
 import { User } from '../Models/User';
 import { Department } from '../Models/department';
-import { forEach } from '@angular/router/src/utils/collection';
 import { FullData } from '../Models/FullData';
 import { concat } from 'rxjs/observable/concat';
 
@@ -45,7 +44,7 @@ export class createcustomer implements OnInit {
     uid: number = -1;
     did: number = -1;
     cid: number = -1;
-
+    
     department: Department = new Department(0);
     edepartment: Department = new Department(0);
     departments: Department[] = [];
@@ -59,29 +58,29 @@ export class createcustomer implements OnInit {
         }
         this.customerForm = this._fb.group({
             customerId: 0,
-            name: new FormControl('', [Validators.required, Validators.minLength(1)]),
+            name: new FormControl('', [Validators.required, Validators.minLength(1), Validators.pattern('[a-zA-Z]*?[ ]?[a-zA-Z]*?')]),
             address: new FormControl('', [Validators.required, Validators.minLength(1)]),
-            email: new FormControl('', [Validators.required, Validators.minLength(1)]),
-            phone: new FormControl('', [Validators.required, Validators.minLength(1)]),
+            email: new FormControl('', [Validators.required, Validators.minLength(1), Validators.email]),
+            phone: new FormControl('', [Validators.required, Validators.minLength(1), Validators.pattern("[+][0-9]{10,13}")]),
             comments: new FormControl('')
         });
         this.contactForm = this._fb.group({
-                name: new FormControl('', [Validators.required, Validators.minLength(1)]),
-                role: new FormControl('', [Validators.required, Validators.minLength(1)]),
-                phone: new FormControl('', [Validators.required, Validators.minLength(1)]),
-                mail: new FormControl('', [Validators.required, Validators.minLength(1)]),
+            name: new FormControl('', [Validators.required, Validators.minLength(1), Validators.pattern('[a-zA-Z]*?[ ]?[a-zA-Z]*?')]),
+            role: new FormControl('', [Validators.required, Validators.minLength(1)]),
+            phone: new FormControl('', [Validators.required, Validators.minLength(1), Validators.pattern("[+][0-9]{10,13}")]),
+            mail: new FormControl('', [Validators.required, Validators.minLength(1)]),
         });
         this.userForm = this._fb.group({
-            name: new FormControl('', [Validators.required, Validators.minLength(1)]),
-            mobile: new FormControl('', [Validators.required, Validators.minLength(1)]),
+            name: new FormControl('', [Validators.required, Validators.minLength(1), Validators.pattern('[a-zA-Z]*?[ ]?[a-zA-Z]*?')]),
+            mobile: new FormControl('', [Validators.required, Validators.minLength(1), Validators.pattern("[+][0-9]{10,13}")]),
             mail: new FormControl('', [Validators.required, Validators.minLength(1)]),
             userName: new FormControl('', [Validators.required, Validators.minLength(1)]),
-            tempudid: new FormControl('', [Validators.required, Validators.minLength(1)]),
-            password: new FormControl('', [Validators.required, Validators.minLength(1)]),
+            tempudid: new FormControl('', [Validators.required]),
+            password: new FormControl('', [Validators.required, Validators.minLength(8)]),
 
         });
         this.depForm = this._fb.group({
-            name: new FormControl('', [Validators.required, Validators.minLength(1)]),
+            name: new FormControl('', [Validators.required, Validators.minLength(1), Validators.pattern('[a-zA-Z]*?[ ]?[a-zA-Z]*?')]),
             address: new FormControl('', [Validators.required, Validators.minLength(1)]),
             tempduid: new FormControl('', [Validators.required, Validators.minLength(1)]),
         });
@@ -194,7 +193,7 @@ export class createcustomer implements OnInit {
         this.userForm.patchValue(user);
 
     }
-
+    
     addDepartment() {
         this.customerInf();
         this.adddep = true;
@@ -249,7 +248,16 @@ export class createcustomer implements OnInit {
         }
         this.contactForm.reset();
     }
-
+    usersExist() {
+        if (this.users.length > 0) {
+            return true;
+        }
+    }
+    departExist() {
+        if (this.departments.length > 0) {
+            return true;
+        }
+    }
     saveDepartment() {
         this.department = this.depForm.value;
         console.log(this.departments);
