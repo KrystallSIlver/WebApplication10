@@ -44,6 +44,7 @@ export class createcustomer implements OnInit {
     uid: number = -1;
     did: number = -1;
     cid: number = -1;
+    types: string[] = ['Municipality','Business'];
     
     department: Department = new Department(0);
     edepartment: Department = new Department(0);
@@ -58,8 +59,10 @@ export class createcustomer implements OnInit {
         }
         this.customerForm = this._fb.group({
             customerId: 0,
+            type: new FormControl('', [Validators.required]),
             name: new FormControl('', [Validators.required, Validators.minLength(1), Validators.pattern('[a-zA-Z]*?[ ]?[a-zA-Z]*?')]),
             address: new FormControl('', [Validators.required, Validators.minLength(1)]),
+            numberofschools: new FormControl('',[Validators.pattern('[0-9]*?')]),
             email: new FormControl('', [Validators.required, Validators.minLength(1), Validators.email]),
             phone: new FormControl('', [Validators.required, Validators.minLength(1), Validators.pattern("[+][0-9]{10,13}")]),
             comments: new FormControl('')
@@ -96,8 +99,8 @@ export class createcustomer implements OnInit {
     
 
     ngOnInit() {
-        
-     //   this.customerForm.valueChanges.subscribe(value =>console.log(value));
+
+        this.customerForm.valueChanges.subscribe(value =>console.log(value));
       //  this.contactForm.valueChanges.subscribe(v => {console.log(v);});
 
         if (this.customerId > 0) {
@@ -120,6 +123,9 @@ export class createcustomer implements OnInit {
             return;
         }
         this.customer = this.customerForm.value;
+        if (this.customer.type != null && this.customer.type != "Municipality") {
+            this.customer.numberofschools = 0;
+        }
         this.customer.contacts = this.contacts;
         this.customer.users = this.users;
         this.customer.departments = this.departments;
@@ -258,6 +264,15 @@ export class createcustomer implements OnInit {
             return true;
         }
     }
+    typee() {
+        if (this.customerForm.controls['type'].value == "Municipality") {
+
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
     saveDepartment() {
         this.department = this.depForm.value;
         console.log(this.departments);
@@ -347,6 +362,8 @@ export class createcustomer implements OnInit {
     get email() { return this.customerForm.get('email'); }
     get phone() { return this.customerForm.get('phone'); }
     get comments() { return this.customerForm.get('comments'); }
+    get type() { return this.customerForm.get('type'); }
+    get numberofschools() { return this.customerForm.get('numberofschools'); }
 
     get cname() { return this.contactForm.get('name'); }
     get crole() { return this.contactForm.get('role'); }

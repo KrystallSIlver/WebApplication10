@@ -11,6 +11,15 @@
     <h1 *ngIf="customerId==0">Create Customer</h1><h1 *ngIf="customerId>0">Edit Customer</h1>
 <form [formGroup]="customerForm" (ngSubmit)="save()" novalidate>
     <div class="form-group row">
+        <label class="control-label col-md-12">Customer type</label>
+        <div class="col-md-4">
+        <select formControlName="type">
+            <option value="" selected disabled hiden>Chose type of customer</option>
+            <option *ngFor="let x of types">{{x}}</option>
+        </select>
+            </div>
+    </div>
+    <div class="form-group row">
         <label class="control-label col-md-12">Name</label>
         <div class="col-md-4">
             <input class="form-control" type="text" value="name" formControlName="name" />
@@ -27,6 +36,12 @@
         <span class="text-danger" *ngIf="address.invalid && address.dirty ">
             Address is incorrect
         </span>
+    </div>
+    <div class="form-group row" *ngIf="typee()">
+        <label class="control-label col-md-12">Number of schools</label>
+        <div class="col-md-4">
+        <input class="form-control" name="numberofschools" type="number" formControlName="numberofschools" />
+        </div>
     </div>
     <div class="form-group row">
         <label class="control-label col-md-12" for="Email">Email</label>

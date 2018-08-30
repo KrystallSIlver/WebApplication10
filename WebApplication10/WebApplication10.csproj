@@ -28,6 +28,8 @@
     <Compile Remove="Migrations\20180823120258_2.Designer.cs" />
     <Compile Remove="Migrations\20180828085905_delete1.cs" />
     <Compile Remove="Migrations\20180828085905_delete1.Designer.cs" />
+    <Compile Remove="Migrations\20180830083253_typeofc.cs" />
+    <Compile Remove="Migrations\20180830083253_typeofc.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

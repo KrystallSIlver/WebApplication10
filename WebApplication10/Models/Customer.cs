@@ -18,7 +18,8 @@ namespace WebApplication10.Models
         public string Email { get; set; }
         public string Phone { get; set; }
         public string Comments { get; set; }
-
+        public string Type { get; set; }
+        public int? NumberOfSchools { get; set; }
         public ICollection<Contact> Contacts { get; set; }
         public ICollection<Department> Departments { get; set; }
         public ICollection<User> Users { get; set; }
