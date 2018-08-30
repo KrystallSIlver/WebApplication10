@@ -1,10 +1,11 @@
 ﻿using System;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace WebApplication10.Models
 {
-    public partial class testTaskdbContext : DbContext
+    public partial class testTaskdbContext : IdentityDbContext<User>
     {
         public testTaskdbContext()
         {
@@ -35,7 +36,7 @@ namespace WebApplication10.Models
             {
                 //optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=testTaskdb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
               // optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=testTaskdb3;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
-                optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=testTaskdb5;");
+                //optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=testTaskdb5;");
                 optionsBuilder.EnableSensitiveDataLogging();
             }
         }
@@ -123,7 +124,7 @@ namespace WebApplication10.Models
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.Property(e => e.UserId);
+                //entity.Property(e => e.UserId);
 
                 entity.Property(e => e.Mail)
                     .IsRequired()
@@ -159,6 +160,7 @@ namespace WebApplication10.Models
                     .IsRequired(false)
                     .HasConstraintName("FK__User__Department");
             });
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

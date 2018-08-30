@@ -64,7 +64,7 @@ namespace WebApplication10.Models
                             User tUser = db.User.FirstOrDefault(p => p == u);
                             Console.WriteLine(tUser);
                             d.User = tUser;
-                            d.UserId = tUser.UserId;
+                            d.UserId = tUser.UserId.ToString();
                             db.Entry(d).State = EntityState.Modified;
                             
                         }
@@ -161,7 +161,7 @@ namespace WebApplication10.Models
                             User tUser = db.User.FirstOrDefault(p => p == u);
                             Console.WriteLine(tUser);
                             d.User = tUser;
-                            d.UserId = tUser.UserId;
+                            d.UserId = tUser.UserId.ToString();
                             db.Entry(d).State = EntityState.Modified;
 
                         }

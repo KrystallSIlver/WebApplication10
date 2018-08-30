@@ -15,7 +15,7 @@ namespace WebApplication10.Models
         public string Name { get; set; }
         public string Address { get; set; }
         public int CustomerId { get; set; }
-        public int? UserId { get; set; }
+        public string UserId { get; set; }
  //       public int? ManagerUserId { get; set; }
         [NotMapped]
         public int tempdid { get; set; }
