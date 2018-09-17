@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace WebApplication10.Models
 {
@@ -207,6 +208,21 @@ namespace WebApplication10.Models
                 throw;
             }
         }
+        #endregion
+        #region Identity
+        public int Login(Login Luser)
+        {
+            try
+            {
+                User user = db.User.FirstOrDefault(n => n.UserName == Luser.UserName && n.Password == Luser.Password);
+            }
+            catch
+            {
+                throw;
+            }
+            return 1;
+        }
+
         #endregion
         #region Lists
         //To Get the list of Cities 
